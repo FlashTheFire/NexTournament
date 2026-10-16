@@ -1,0 +1,61 @@
+version: "3.8"
+
+networks:
+  nextournament-internal:
+    driver: bridge
+  coolify:
+    external: true
+
+volumes:
+  nextournament_pgdata:
+  nextournament_redisdata:
+
+services:
+  nextournament-db:
+    image: postgres:16-alpine
+    container_name: nextournament-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nextournament_db
+      POSTGRES_USER: nextourn_user
+      POSTGRES_PASSWORD: NextournProdSecure2026!
+    volumes:
+      - nextournament_pgdata:/var/lib/postgresql/data
+    networks:
+      - nextournament-internal
+    ports:
+      - "127.0.0.1:5433:5432"
+
+  nextournament-redis:
+    image: redis:7-alpine
+    container_name: nextournament-redis
+    restart: unless-stopped
+    volumes:
+      - nextournament_redisdata:/data
+    networks:
+      - nextournament-internal
+    ports:
+      - "127.0.0.1:6380:6379"
+
+  nextournament-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: nextournament-api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://nextourn_user:NextournProdSecure2026!@nextournament-db:5432/nextournament_db"
+      REDIS_URL: "redis://nextournament-redis:6379/0"
+      BOT_TOKEN: "8008433431:AAFFZ-DEMO_TOKEN_NEX"
+    volumes:
+      - ./updates:/app/updates
+    networks:
+      - nextournament-internal
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextournament-api.rule=Host(`51.21.87.49`) || PathPrefix(`/api/v1`) || PathPrefix(`/updates`) || PathPrefix(`/docs`) || PathPrefix(`/openapi.json`)"
+      - "traefik.http.services.nextournament-api.loadbalancer.server.port=8000"
+    depends_on:
+      - nextournament-db
+      - nextournament-redis
