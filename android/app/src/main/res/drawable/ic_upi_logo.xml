@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- theSVG Sharp UPI Fast Payment Icon -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M7,2V14H11V2H7ZM13,2V14H17V2H13ZM7,16V22H17V16H7Z" />
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M2,6L5,10L2,14V18L8,10L2,2V6ZM22,6L19,10L22,14V18L16,10L22,2V6Z" />
+</vector>

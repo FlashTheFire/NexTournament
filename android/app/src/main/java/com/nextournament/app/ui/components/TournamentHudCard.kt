@@ -4,13 +4,16 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nextournament.app.R
 import com.nextournament.app.ui.theme.*
 
 @Composable
@@ -22,6 +25,7 @@ fun TournamentHudCard(
     prizePool: String,
     slotsStatus: String,
     modifier: Modifier = Modifier,
+    perKillBounty: String? = null,
     onJoinClick: () -> Unit
 ) {
     Card(
@@ -31,17 +35,26 @@ fun TournamentHudCard(
         modifier = modifier.fillMaxWidth().padding(vertical = 6.dp)
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
-            // Header Row: Game Badge + Map
+            // Header Row: Game Badge + Verified Shield + Map
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CyberBadge(
-                    text = game,
-                    color = NeonCyan,
-                    backgroundColor = SlateElevated
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    CyberBadge(
+                        text = game,
+                        color = NeonCyan,
+                        backgroundColor = SlateElevated
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_shield_sharp),
+                        contentDescription = "Anti-Cheat Shield",
+                        tint = CyberEmerald,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
                 Text(
                     text = "MAP: $map".uppercase(),
                     color = TextMutedSecondary,
@@ -55,48 +68,60 @@ fun TournamentHudCard(
             // Match Title
             Text(
                 text = title,
-                color = TextWhitePrimary,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
+                style = EsportsTypography.headlineMedium,
                 maxLines = 2
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Bottom Metric Row: Prize, Entry, and Join Action
+            // Bottom Metric Row: Trophy Prize, Kill Bounty / Entry, and Join Action
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
-                    Text(
-                        text = "PRIZE POOL",
-                        color = TextMutedSecondary,
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Bold
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_trophy_sharp),
+                        contentDescription = "Trophy",
+                        tint = NeonAmber,
+                        modifier = Modifier.size(22.dp)
                     )
-                    Text(
-                        text = "₹$prizePool",
-                        color = NeonAmber,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Black
-                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Column {
+                        Text(
+                            text = "PRIZE POOL",
+                            style = EsportsTypography.labelSmall
+                        )
+                        Text(
+                            text = "₹$prizePool",
+                            color = NeonAmber,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Black
+                        )
+                    }
                 }
 
-                Column {
-                    Text(
-                        text = "ENTRY FEE",
-                        color = TextMutedSecondary,
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Bold
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_skull_kill_sharp),
+                        contentDescription = "Kill Bounty",
+                        tint = LaserCrimson,
+                        modifier = Modifier.size(18.dp)
                     )
-                    Text(
-                        text = "₹$entryFee",
-                        color = TextWhitePrimary,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Column {
+                        Text(
+                            text = if (perKillBounty != null) "KILL BOUNTY" else "ENTRY",
+                            style = EsportsTypography.labelSmall
+                        )
+                        Text(
+                            text = if (perKillBounty != null) "₹$perKillBounty" else "₹$entryFee",
+                            color = TextWhitePrimary,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
 
                 CyberActionButton(

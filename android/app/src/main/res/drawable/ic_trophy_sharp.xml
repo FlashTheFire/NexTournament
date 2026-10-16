@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Sharp Geometric Trophy (Keyline / Game-Icons inspired) -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M19,3H5V5H19V3ZM18,7H6V11C6,14.31 8.69,17 12,17C15.31,17 18,14.31 18,11V7ZM4,7H2V11C2,13.21 3.79,15 6,15V13C4.9,13 4,12.1 4,11V7ZM20,7V11C20,12.1 19.1,13 18,13V15C20.21,15 22,13.21 22,11V7H20ZM13,19H11V21H7V23H17V21H13V19Z" />
+</vector>

@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Sharp Tactical Skull Kill Icon (Keyline / Game-Icons) -->
+    <path
+        android:fillColor="#EF4444"
+        android:pathData="M12,2C6.48,2 2,6.48 2,12C2,15.68 4,18.89 7,20.6V22H17V20.6C20,18.89 22,15.68 22,12C22,6.48 17.52,2 12,2ZM8,14C6.9,14 6,13.1 6,12C6,10.9 6.9,10 8,10C9.1,10 10,10.9 10,12C10,13.1 9.1,14 8,14ZM16,14C14.9,14 14,13.1 14,12C14,10.9 14.9,10 16,10C17.1,10 18,10.9 18,12C18,13.1 17.1,14 16,14ZM9,18V16H11V18H9ZM13,18V16H15V18H13Z" />
+</vector>
