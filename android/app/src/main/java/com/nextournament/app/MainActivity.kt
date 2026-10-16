@@ -6,14 +6,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -94,6 +98,7 @@ fun MainAppOrchestrator(
     var showUpiDepositModal by remember { mutableStateOf(false) }
     var showCryptoDepositModal by remember { mutableStateOf(false) }
     var showWithdrawalDrawer by remember { mutableStateOf(false) }
+    var showAiSupportModal by remember { mutableStateOf(false) }
 
     // OCR Scorecard Proof Modal State
     var showScorecardModal by remember { mutableStateOf(false) }
@@ -384,16 +389,18 @@ fun MainAppOrchestrator(
                                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
                                     CyberActionButton(
-                                        text = "+ UPI TOP-UP",
+                                        text = "UPI",
                                         onClick = { showUpiDepositModal = true },
                                         modifier = Modifier.weight(1f),
-                                        iconRes = R.drawable.ic_arrow_downward_sharp
+                                        iconRes = R.drawable.ic_arrow_downward_sharp,
+                                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp)
                                     )
                                     CyberActionButton(
-                                        text = "+ USDT CRYPTO",
+                                        text = "CRYPTO",
                                         onClick = { showCryptoDepositModal = true },
                                         modifier = Modifier.weight(1f),
-                                        iconRes = R.drawable.ic_crypto_usdt
+                                        iconRes = R.drawable.ic_crypto_usdt,
+                                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp)
                                     )
                                     OutlinedButton(
                                         onClick = { showWithdrawalDrawer = true },
@@ -406,6 +413,44 @@ fun MainAppOrchestrator(
                                     }
                                 }
                             }
+                        }
+
+                        // AI Support & Payment Dispute Banner
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 2.dp)
+                                .clip(CutCornerShape(4.dp))
+                                .background(SlateElevated)
+                                .border(1.dp, ElectricBlue.copy(alpha = 0.5f), CutCornerShape(4.dp))
+                                .clickable { showAiSupportModal = true }
+                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_shield_sharp),
+                                    contentDescription = null,
+                                    tint = ElectricBlue,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "NEED HELP? AI SUPPORT & UTR RESOLUTION",
+                                    fontFamily = ChakraPetch,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 11.sp,
+                                    color = Color.White
+                                )
+                            }
+                            Text(
+                                text = "OPEN →",
+                                fontFamily = ChakraPetch,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 11.sp,
+                                color = CyberAmber
+                            )
                         }
 
                         // Filterable Transaction History
@@ -519,20 +564,35 @@ fun MainAppOrchestrator(
             // MODAL 5: High-Conversion UPI Deposit Dialog
             if (showUpiDepositModal) {
                 UpiDepositDialog(
-                    amount = 500.0,
+                    initialAmount = 500.0,
                     merchantVpa = "nextournament@icici",
                     merchantName = "NexTournament Esports",
                     installedUpiApps = mockUpiApps,
                     onSelectUpiApp = { app ->
                         Toast.makeText(context, "Opening ${app.appName}...", Toast.LENGTH_SHORT).show()
-                        showUpiDepositModal = false
                     },
-                    onSubmitUtr = { utr ->
-                        currentUser = currentUser.copy(gameBalance = currentUser.gameBalance + 500.0)
+                    onVerifyPayment = { amount, orderId ->
+                        currentUser = currentUser.copy(gameBalance = currentUser.gameBalance + amount)
                         showUpiDepositModal = false
-                        Toast.makeText(context, "UTR $utr verified! ₹500 credited.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Order #$orderId Verified! ₹%.0f credited.".format(amount), Toast.LENGTH_LONG).show()
+                    },
+                    onOpenAiSupport = {
+                        showUpiDepositModal = false
+                        showAiSupportModal = true
                     },
                     onDismiss = { showUpiDepositModal = false }
+                )
+            }
+
+            // MODAL 5B: In-App Cyber Support AI Bot (Automated UTR Verification & Dispute Escalation)
+            if (showAiSupportModal) {
+                AiSupportChatDrawer(
+                    userIgn = currentUser.ign,
+                    onCreditBalance = { amount ->
+                        currentUser = currentUser.copy(gameBalance = currentUser.gameBalance + amount)
+                        Toast.makeText(context, "₹%.0f credited via AI Support!".format(amount), Toast.LENGTH_LONG).show()
+                    },
+                    onDismiss = { showAiSupportModal = false }
                 )
             }
 

@@ -211,14 +211,14 @@ fun TransactionItemCard(tx: TransactionEntity) {
                     fontFamily = ChakraPetch,
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp,
-                    color = if (isCredit) CyberEmerald else CrimsonRed
+                    color = if (isCredit) CyberEmerald else LaserCrimson
                 )
                 CyberBadge(
-                    text = tx.status.uppercase(),
-                    color = when (tx.status.uppercase()) {
+                    text = if (!isCredit) "DEBIT" else tx.status.uppercase(),
+                    color = if (!isCredit) LaserCrimson else when (tx.status.uppercase()) {
                         "COMPLETED", "SUCCESS" -> CyberEmerald
                         "PENDING" -> CyberAmber
-                        else -> CrimsonRed
+                        else -> LaserCrimson
                     },
                     backgroundColor = SlateElevated
                 )
