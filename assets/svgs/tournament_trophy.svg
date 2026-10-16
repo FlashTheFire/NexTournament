@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="goldTrophy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE066"/>
+      <stop offset="45%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+  </defs>
+  <!-- Handles -->
+  <path d="M 40,50 C 15,50 15,105 55,105" fill="none" stroke="url(#goldTrophy)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 160,50 C 185,50 185,105 145,105" fill="none" stroke="url(#goldTrophy)" stroke-width="8" stroke-linecap="round"/>
+  <!-- Cup Body -->
+  <path d="M 45,35 L 155,35 L 140,115 C 130,140 70,140 60,115 Z" fill="url(#goldTrophy)" stroke="#FDE68A" stroke-width="3"/>
+  <!-- Star on Cup -->
+  <polygon points="100,55 106,72 124,72 109,83 115,100 100,89 85,100 91,83 76,72 94,72" fill="#FFFFFF"/>
+  <!-- Stem & Pedestal -->
+  <rect x="90" y="130" width="20" height="30" fill="url(#goldTrophy)"/>
+  <polygon points="65,160 135,160 145,185 55,185" fill="#1E293B" stroke="url(#goldTrophy)" stroke-width="3"/>
+  <text x="100" y="178" font-family="'Arial Black', sans-serif" font-size="12" fill="#F59E0B" text-anchor="middle">ESPORTS</text>
+</svg>

@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nextournament_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-nextourn_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-SuperSecretPassword123}
+      POSTGRES_DB: ${POSTGRES_DB:-nextournament_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-nextourn_user} -d ${POSTGRES_DB:-nextournament_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: nextournament_redis
+    restart: always
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-SuperSecretRedisPassword123}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-SuperSecretRedisPassword123}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bot:
+    build: .
+    container_name: nextournament_bot
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-nextourn_user}:${POSTGRES_PASSWORD:-SuperSecretPassword123}@postgres:5432/${POSTGRES_DB:-nextournament_db}
+      REDIS_URL: redis://:${REDIS_PASSWORD:-SuperSecretRedisPassword123}@redis:6379/0
+    volumes:
+      - ./logs:/app/logs
+      - ./assets:/app/assets
+      - ./src:/app/src
+    ports:
+      - "4040:4040"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4040/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  postgres_data:
+  redis_data:

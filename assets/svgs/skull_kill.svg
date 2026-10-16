@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="metalSkull" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0E6ED"/>
+      <stop offset="50%" stop-color="#7A889B"/>
+      <stop offset="100%" stop-color="#2D3748"/>
+    </linearGradient>
+  </defs>
+  <!-- Crossed Daggers -->
+  <line x1="20" y1="20" x2="180" y2="180" stroke="#FF4500" stroke-width="8" stroke-linecap="round"/>
+  <line x1="180" y1="20" x2="20" y2="180" stroke="#FF4500" stroke-width="8" stroke-linecap="round"/>
+  <!-- Skull Head -->
+  <path d="M 60,60 C 60,25 140,25 140,60 C 140,85 130,105 130,125 L 70,125 C 70,105 60,85 60,60 Z" fill="url(#metalSkull)" stroke="#FF2200" stroke-width="3"/>
+  <!-- Eyes -->
+  <polygon points="75,65 92,72 82,85" fill="#FF1100"/>
+  <polygon points="125,65 108,72 118,85" fill="#FF1100"/>
+  <!-- Nose -->
+  <polygon points="100,88 95,102 105,102" fill="#1A202C"/>
+  <!-- Teeth / Jaw -->
+  <rect x="76" y="125" width="48" height="20" rx="4" fill="url(#metalSkull)"/>
+  <line x1="86" y1="125" x2="86" y2="145" stroke="#1A202C" stroke-width="3"/>
+  <line x1="96" y1="125" x2="96" y2="145" stroke="#1A202C" stroke-width="3"/>
+  <line x1="104" y1="125" x2="104" y2="145" stroke="#1A202C" stroke-width="3"/>
+  <line x1="114" y1="125" x2="114" y2="145" stroke="#1A202C" stroke-width="3"/>
+</svg>

@@ -1,0 +1,27 @@
+# Git & IDE
+.git
+.gitignore
+.dockerignore
+.vscode/
+.idea/
+
+# Pytest & Cache
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Testing & Demos
+tests/
+scripts/benchmarks/
+archive/
+
+# Documentation
+docs/
+*.md
+
+# Logs & Local Config
+logs/
+.env
+.env.example

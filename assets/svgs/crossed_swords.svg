@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+  </defs>
+  <!-- Blade 1 (Top-Left to Bottom-Right) -->
+  <path d="M 40,25 L 55,30 L 160,150 L 150,165 Z" fill="url(#bladeGrad)" stroke="#38BDF8" stroke-width="2"/>
+  <polygon points="145,145 170,140 160,175" fill="#F59E0B"/>
+  <rect x="155" y="155" width="25" height="10" transform="rotate(45 155 155)" fill="#0F172A" stroke="#F59E0B" stroke-width="2"/>
+  <!-- Blade 2 (Top-Right to Bottom-Left) -->
+  <path d="M 160,25 L 145,30 L 40,150 L 50,165 Z" fill="url(#bladeGrad)" stroke="#38BDF8" stroke-width="2"/>
+  <polygon points="55,145 30,140 40,175" fill="#F59E0B"/>
+  <rect x="35" y="155" width="25" height="10" transform="rotate(-45 35 155)" fill="#0F172A" stroke="#F59E0B" stroke-width="2"/>
+</svg>

@@ -1,0 +1,420 @@
+﻿Folder PATH listing for volume New Volume
+Volume serial number is A479-0551
+D:.
+|   .dockerignore
+|   .env
+|   .env.example
+|   .gitignore
+|   docker-compose.yml
+|   Dockerfile
+|   project-structure.txt
+|   pytest.ini
+|   requirements.txt
+|   
++---.pytest_cache
+|   |   .gitignore
+|   |   CACHEDIR.TAG
+|   |   README.md
+|   |   
+|   \---v
+|       \---cache
+|               lastfailed
+|               nodeids
+|               
++---assets
+|   +---brand
+|   |       freefire_esports.png
+|   |       
+|   +---characters
+|   |       alok_avatar.png
+|   |       alok_fandom_true.png
+|   |       chrono_avatar.png
+|   |       eva_default.png
+|   |       hayato_awakening.png
+|   |       kelly_awakening.png
+|   |       k_avatar.png
+|   |       tatsuya_avatar.png
+|   |       wukong_avatar.png
+|   |       
+|   +---icons
+|   |       booyah_logo.png
+|   |       skull_kill.png
+|   |       trophy.png
+|   |       
+|   +---pets
+|   |       beaston.png
+|   |       cat.png
+|   |       dog.png
+|   |       falco.png
+|   |       mr_waggor.png
+|   |       night_panther.png
+|   |       ottero.png
+|   |       panda.png
+|   |       robo.png
+|   |       rockie.png
+|   |       shiba.png
+|   |       spirit_fox.png
+|   |       
+|   +---posters
+|   |       default_tournament_card.jpg
+|   |       esports_battleground.jpg
+|   |       esports_battleground.png
+|   |       
+|   +---ranks
+|   |       bronze-1.png
+|   |       bronze-2.png
+|   |       bronze-3.png
+|   |       diamond-1.png
+|   |       diamond-2.png
+|   |       diamond-3.png
+|   |       diamond-4.png
+|   |       gold-1.png
+|   |       gold-2.png
+|   |       gold-3.png
+|   |       gold-4.png
+|   |       grandmaster.png
+|   |       heroic.png
+|   |       master.png
+|   |       platinum-1.png
+|   |       platinum-2.png
+|   |       platinum-3.png
+|   |       platinum-4.png
+|   |       silver-1.png
+|   |       silver-2.png
+|   |       silver-3.png
+|   |       
+|   +---special
+|   |       special_dragon.png
+|   |       special_kelly.png
+|   |       special_kla_combat.png
+|   |       special_monster_truck.png
+|   |       special_ninja.png
+|   |       special_rafael.png
+|   |       special_street_fighter.png
+|   |       
+|   +---svgs
+|   |       booyah_crown.svg
+|   |       crossed_swords.svg
+|   |       freefire_logo.svg
+|   |       level_shield.svg
+|   |       skull_kill.svg
+|   |       tournament_trophy.svg
+|   |       
+|   +---vehicles
+|   |       amphibian.png
+|   |       military_jeep.png
+|   |       monster_truck.png
+|   |       motorcycle.png
+|   |       sports_car.png
+|   |       suv.png
+|   |       tutu_auto.png
+|   |       
+|   \---weapons
+|           ak47_camo.png
+|           awm_sniper.png
+|           desert_eagle.png
+|           gloowall_shield.png
+|           groza.png
+|           katana_bloodmoon.png
+|           m1014_shotgun.png
+|           m1887_shotgun.png
+|           m4a1.png
+|           mp40_topgamer.png
+|           scar_tiger.png
+|           ump.png
+|           
++---docs
+|       01_PRODUCT_REQUIREMENTS_DOCUMENT.md
+|       02_SYSTEM_ARCHITECTURE_DOCUMENT.md
+|       03_DATABASE_SCHEMA_AND_DATA_DICTIONARY.md
+|       04_API_INTEGRATIONS_SPECIFICATION.md
+|       05_SECURITY_AND_ANTI_FRAUD.md
+|       06_UI_UX_AND_TYPOGRAPHY_GUIDE.md
+|       07_DEPLOYMENT_AND_OPERATIONS_RUNBOOK.md
+|       08_IMPLEMENTATION_PLAN_AND_TODO.md
+|       09_PHASE_2_IMPLEMENTATION_PLAN.md
+|       10_PHASE_3_IMPLEMENTATION_PLAN.md
+|       11_SEAT_SELECTION_AND_INLINE_SEARCH_RESEARCH.md
+|       12_PHASE_4_IMPLEMENTATION_PLAN.md
+|       13_PHASE_5_IMPLEMENTATION_PLAN.md
+|       14_PHASE_6_IMPLEMENTATION_PLAN.md
+|       README.md
+|       
++---logs
++---scratch
+|   |   check_400.py
+|   |   compare_proto.py
+|   |   compile_proto.py
+|   |   deobfuscate_memevaiya.py
+|   |   gen_token.py
+|   |   inspect_memevaiya.py
+|   |   kaifcodec_core.py
+|   |   kaifcodec_freefire_pb2.py
+|   |   kaifcodec_settings.py
+|   |   linsofc_api.js
+|   |   linsofc_constants.js
+|   |   linsofc_protobuf.js
+|   |   linsofc_settings.yaml
+|   |   linsofc_test_login.js
+|   |   login_pb2.py
+|   |   m41nul_index.html
+|   |   m41nul_readme.md
+|   |   marcosalx_app.py
+|   |   memevaiya_app.py
+|   |   memevaiya_index.py
+|   |   narayan_gen_token.py
+|   |   narayan_login_pb2.py
+|   |   narayan_main.py
+|   |   narayan_output_pb2.py
+|   |   narayan_response.py
+|   |   narayan_settings.py
+|   |   output_pb2.py
+|   |   probe_register.py
+|   |   response.py
+|   |   scan_tags.py
+|   |   scan_varints.py
+|   |   settings.py
+|   |   siambhau_readme.md
+|   |   test_7988.py
+|   |   test_all_accounts.py
+|   |   test_all_tags.py
+|   |   test_cross_region.py
+|   |   test_current_heal.py
+|   |   test_docker_redis_token.py
+|   |   test_fields.py
+|   |   test_hosts.py
+|   |   test_linsofc_login.py
+|   |   test_lokaya_heal.py
+|   |   test_major_login.py
+|   |   test_perfect_heal.py
+|   |   test_plat_ids.py
+|   |   test_time_parser.py
+|   |   test_uas.py
+|   |   test_working_token.py
+|   |   
+|   +---lokayafx
+|   |   |   .gitignore
+|   |   |   accounts.txt
+|   |   |   API_DOCS.md
+|   |   |   app.py
+|   |   |   credentials.py
+|   |   |   index.py
+|   |   |   official_media.py
+|   |   |   protocol.py
+|   |   |   README.md
+|   |   |   requirements.txt
+|   |   |   vercel.json
+|   |   |   wsgi.py
+|   |   |   
+|   |   +---fonts
+|   |   |       NotoSans-Bold.ttf
+|   |   |       NotoSansCherokee-Bold.ttf
+|   |   |       NotoSansMath-Regular.ttf
+|   |   |       NotoSansSymbols-Regular.ttf
+|   |   |       NotoSansSymbols2-Regular.ttf
+|   |   |       
+|   |   +---proto
+|   |   |   |   AccountPersonalShow_pb2.py
+|   |   |   |   FreeFire_pb2.py
+|   |   |   |   main_pb2.py
+|   |   |   |   __init__.py
+|   |   |   |   
+|   |   |   \---__pycache__
+|   |   |           AccountPersonalShow_pb2.cpython-311.pyc
+|   |   |           FreeFire_pb2.cpython-311.pyc
+|   |   |           main_pb2.cpython-311.pyc
+|   |   |           __init__.cpython-311.pyc
+|   |   |           
+|   |   +---static
+|   |   |       app.js
+|   |   |       style.css
+|   |   |       
+|   |   +---templates
+|   |   |       index.html
+|   |   |       
+|   |   +---tools
+|   |   |       diagnose.py
+|   |   |       start-local.ps1
+|   |   |       
+|   |   \---__pycache__
+|   |           app.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           gen_token.cpython-311.pyc
+|           login_pb2.cpython-311.pyc
+|           narayan_response.cpython-311.pyc
+|           output_pb2.cpython-311.pyc
+|           response.cpython-311.pyc
+|           settings.cpython-311.pyc
+|           
++---scripts
+|   |   download_core_freefire_assets.py
+|   |   download_freefire_catalog.py
+|   |   fix_typography.py
+|   |   process_game_assets.py
+|   |   
+|   \---benchmarks
+|           generate_demo_cards.py
+|           render_esports_card.py
+|           render_new_cards.py
+|           render_poster_16_9.py
+|           render_profile_card.py
+|           render_tournament_cards.py
+|           render_victory_card.py
+|           
++---src
+|   |   config.py
+|   |   main.py
+|   |   __init__.py
+|   |   
+|   +---database
+|   |   |   connection.py
+|   |   |   init_db.py
+|   |   |   models.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           connection.cpython-311.pyc
+|   |           init_db.cpython-311.pyc
+|   |           models.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   +---handlers
+|   |   |   daily_bonus.py
+|   |   |   deposit.py
+|   |   |   deposit_crypto.py
+|   |   |   inline_query.py
+|   |   |   leaderboard.py
+|   |   |   proof_submission.py
+|   |   |   redeem.py
+|   |   |   referral.py
+|   |   |   seat_picker.py
+|   |   |   start.py
+|   |   |   tournament.py
+|   |   |   withdraw.py
+|   |   |   __init__.py
+|   |   |   
+|   |   +---admin
+|   |   |   |   approvals.py
+|   |   |   |   broadcast_credentials.py
+|   |   |   |   create_match.py
+|   |   |   |   results.py
+|   |   |   |   
+|   |   |   \---__pycache__
+|   |   |           approvals.cpython-311.pyc
+|   |   |           broadcast_credentials.cpython-311.pyc
+|   |   |           create_match.cpython-311.pyc
+|   |   |           results.cpython-311.pyc
+|   |   |           
+|   |   \---__pycache__
+|   |           daily_bonus.cpython-311.pyc
+|   |           deposit.cpython-311.pyc
+|   |           deposit_crypto.cpython-311.pyc
+|   |           inline_query.cpython-311.pyc
+|   |           leaderboard.cpython-311.pyc
+|   |           proof_submission.cpython-311.pyc
+|   |           redeem.cpython-311.pyc
+|   |           referral.cpython-311.pyc
+|   |           seat_picker.cpython-311.pyc
+|   |           start.cpython-311.pyc
+|   |           tournament.cpython-311.pyc
+|   |           withdraw.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   +---middlewares
+|   |   |   auth.py
+|   |   |   database.py
+|   |   |   rate_limit.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           auth.cpython-311.pyc
+|   |           database.cpython-311.pyc
+|   |           rate_limit.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   +---proto
+|   |   |   data_pb2.py
+|   |   |   freefire_pb2.py
+|   |   |   MajorLogin.proto
+|   |   |   MajorLogin_pb2.py
+|   |   |   uid_generator_pb2.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           data_pb2.cpython-311.pyc
+|   |           freefire_pb2.cpython-311.pyc
+|   |           MajorLogin_pb2.cpython-311.pyc
+|   |           uid_generator_pb2.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   +---services
+|   |   |   broadcaster.py
+|   |   |   cancellation_worker.py
+|   |   |   card_generator.py
+|   |   |   currency_service.py
+|   |   |   freefire_api.py
+|   |   |   freefire_assets.py
+|   |   |   oxapay_service.py
+|   |   |   paytm_service.py
+|   |   |   redeem_service.py
+|   |   |   referral_service.py
+|   |   |   tournament_service.py
+|   |   |   vision_ocr.py
+|   |   |   wallet_service.py
+|   |   |   webhook_server.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           broadcaster.cpython-311.pyc
+|   |           cancellation_worker.cpython-311.pyc
+|   |           card_generator.cpython-311.pyc
+|   |           currency_service.cpython-311.pyc
+|   |           freefire_api.cpython-311.pyc
+|   |           freefire_assets.cpython-311.pyc
+|   |           oxapay_service.cpython-311.pyc
+|   |           paytm_service.cpython-311.pyc
+|   |           redeem_service.cpython-311.pyc
+|   |           referral_service.cpython-311.pyc
+|   |           tournament_service.cpython-311.pyc
+|   |           vision_ocr.cpython-311.pyc
+|   |           wallet_service.cpython-311.pyc
+|   |           webhook_server.cpython-311.pyc
+|   |           __init__.cpython-311.pyc
+|   |           
+|   +---utils
+|   |   |   i18n.py
+|   |   |   keyboards.py
+|   |   |   screen.py
+|   |   |   typography.py
+|   |   |   
+|   |   \---__pycache__
+|   |           i18n.cpython-311.pyc
+|   |           keyboards.cpython-311.pyc
+|   |           screen.cpython-311.pyc
+|   |           typography.cpython-311.pyc
+|   |           
+|   \---__pycache__
+|           config.cpython-311.pyc
+|           main.cpython-311.pyc
+|           __init__.cpython-311.pyc
+|           
+\---tests
+    |   test_buttons_and_navigation.py
+    |   test_phase2.py
+    |   test_phase3_admin_lifecycle.py
+    |   test_phase3_seat_picker.py
+    |   test_phase4_wallet.py
+    |   test_phase5_features.py
+    |   test_phase6_production.py
+    |   
+    \---__pycache__
+            test_buttons_and_navigation.cpython-311-pytest-9.0.2.pyc
+            test_phase2.cpython-311-pytest-9.0.2.pyc
+            test_phase2.cpython-311.pyc
+            test_phase3_admin_lifecycle.cpython-311-pytest-9.0.2.pyc
+            test_phase3_seat_picker.cpython-311-pytest-9.0.2.pyc
+            test_phase4_wallet.cpython-311-pytest-9.0.2.pyc
+            test_phase5_features.cpython-311-pytest-9.0.2.pyc
+            test_phase6_production.cpython-311-pytest-9.0.2.pyc
+            

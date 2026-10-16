@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="goldCrown" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2A3"/>
+      <stop offset="40%" stop-color="#FFC700"/>
+      <stop offset="100%" stop-color="#C68A00"/>
+    </linearGradient>
+    <linearGradient id="ruby" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF3366"/>
+      <stop offset="100%" stop-color="#800020"/>
+    </linearGradient>
+  </defs>
+  <!-- Crown Points -->
+  <path d="M 30,140 L 45,70 L 80,105 L 100,45 L 120,105 L 155,70 L 170,140 Z" fill="url(#goldCrown)" stroke="#FFDD44" stroke-width="3"/>
+  <!-- Crown Base -->
+  <rect x="25" y="140" width="150" height="20" rx="6" fill="url(#goldCrown)" stroke="#FFDD44" stroke-width="2"/>
+  <!-- Jewels -->
+  <polygon points="100,55 106,67 100,79 94,67" fill="url(#ruby)"/>
+  <circle cx="50" cy="150" r="5" fill="url(#ruby)"/>
+  <circle cx="100" cy="150" r="6" fill="#00E5FF"/>
+  <circle cx="150" cy="150" r="5" fill="url(#ruby)"/>
+  <!-- Laurel Leaves -->
+  <path d="M 20,130 C 10,90 40,60 40,60 C 40,60 25,85 35,115 Z" fill="#FFC700"/>
+  <path d="M 180,130 C 190,90 160,60 160,60 C 160,60 175,85 165,115 Z" fill="#FFC700"/>
+</svg>
