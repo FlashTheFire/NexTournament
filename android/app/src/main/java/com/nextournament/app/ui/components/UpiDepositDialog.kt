@@ -238,7 +238,7 @@ fun UpiDepositDialog(
 
                 // Action Button: Live Server Verify
                 CyberActionButton(
-                    text = "⚡ VERIFY PAYMENT",
+                    text = "VERIFY PAYMENT",
                     onClick = {
                         onVerifyPayment(selectedAmount, orderId)
                     },
@@ -248,34 +248,42 @@ fun UpiDepositDialog(
                     iconRes = R.drawable.ic_check_circle_sharp
                 )
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
-                // AI Support & UTR Help Link
+                // Bottom Actions: AI Support & UTR Help on Left, Cancel on Right (Identical Style & Row)
                 Row(
-                    modifier = Modifier
-                        .clip(CutCornerShape(4.dp))
-                        .clickable { onOpenAiSupport() }
-                        .padding(horizontal = 8.dp, vertical = 6.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "💬 Paid but amount not added? Ask AI Support & UTR Help →",
-                        fontFamily = ChakraPetch,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = ElectricBlue
-                    )
-                }
+                    TextButton(onClick = onOpenAiSupport) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_chat_sharp),
+                                contentDescription = null,
+                                tint = Color.White.copy(alpha = 0.5f),
+                                modifier = Modifier.size(13.dp)
+                            )
+                            Text(
+                                text = "NEED HELP / UTR?",
+                                fontFamily = ChakraPetch,
+                                fontSize = 11.sp,
+                                color = Color.White.copy(alpha = 0.5f)
+                            )
+                        }
+                    }
 
-                Spacer(modifier = Modifier.height(4.dp))
-
-                TextButton(onClick = onDismiss) {
-                    Text(
-                        text = "CANCEL DEPOSIT",
-                        fontFamily = ChakraPetch,
-                        fontSize = 11.sp,
-                        color = Color.White.copy(alpha = 0.5f)
-                    )
+                    TextButton(onClick = onDismiss) {
+                        Text(
+                            text = "CANCEL DEPOSIT",
+                            fontFamily = ChakraPetch,
+                            fontSize = 11.sp,
+                            color = Color.White.copy(alpha = 0.5f)
+                        )
+                    }
                 }
             }
         }
