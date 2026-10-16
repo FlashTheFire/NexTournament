@@ -7,7 +7,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.core.content.FileProvider
 import com.nextournament.app.data.model.UpdateCheckResponse
-import com.nextournament.app.data.network.OtaApiService
+import com.nextournament.app.data.network.AppVersionApiService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -33,14 +33,18 @@ sealed interface DownloadState {
 @Singleton
 class OtaUpdateManager @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val otaApiService: OtaApiService,
+    private val appVersionApiService: AppVersionApiService,
     private val okHttpClient: OkHttpClient
 ) {
 
     suspend fun checkForUpdates(currentVersionCode: Int): Result<UpdateCheckResponse> {
         return try {
-            val response = otaApiService.checkUpdate(currentVersionCode = currentVersionCode)
-            Result.success(response)
+            val response = appVersionApiService.checkVersion(versionCode = currentVersionCode)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!.toUpdateCheckResponse())
+            } else {
+                Result.failure(Exception("HTTP ${response.code()}: ${response.message()}"))
+            }
         } catch (e: Exception) {
             Result.failure(e)
         }

@@ -25,6 +25,11 @@ val InterFontFamily = FontFamily(
     Font(R.font.inter_bold, FontWeight.Bold)
 )
 
+// Convenient aliases for direct font-family reference
+val OrbitronFont = OrbitronFontFamily
+val ChakraPetch = ChakraPetchFontFamily
+val InterFont = InterFontFamily
+
 val EsportsTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = OrbitronFontFamily,
@@ -58,28 +63,19 @@ val EsportsTypography = Typography(
         fontFamily = InterFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        lineHeight = 20.sp,
         color = TextWhitePrimary
     ),
     bodyMedium = TextStyle(
         fontFamily = InterFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        lineHeight = 16.sp,
         color = TextMutedSecondary
-    ),
-    labelLarge = TextStyle(
-        fontFamily = OrbitronFontFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 12.sp,
-        letterSpacing = 1.2.sp,
-        color = NeonAmber
     ),
     labelSmall = TextStyle(
         fontFamily = ChakraPetchFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 10.sp,
-        letterSpacing = 0.8.sp,
+        fontSize = 11.sp,
+        letterSpacing = 0.5.sp,
         color = TextMutedSecondary
     )
 )

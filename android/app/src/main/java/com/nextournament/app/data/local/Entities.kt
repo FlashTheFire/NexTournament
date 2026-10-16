@@ -127,6 +127,9 @@ data class TransactionEntity(
     val status: String,
     val createdAt: String
 ) {
+    val paymentMethod: String get() = balanceType
+    val timestamp: String get() = createdAt
+
     fun toDto(): TransactionDto = TransactionDto(
         id = id,
         type = type,

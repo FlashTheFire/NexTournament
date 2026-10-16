@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nextournament.app.R
@@ -245,14 +246,17 @@ fun MainAppOrchestrator(
         (1..totalSquads).map { squadNum ->
             val startSlot = (squadNum - 1) * 4 + 1
             SquadCluster(
-                squadNumber = squadNum,
+                teamNumber = squadNum,
+                teamName = "Squad #$squadNum",
                 slots = (startSlot until startSlot + 4).map { slotNum ->
                     val isBooked = slotNum % 3 == 0 || slotNum % 7 == 0
                     SeatSlot(
                         slotNumber = slotNum,
-                        squadNumber = squadNum,
+                        teamNumber = squadNum,
+                        role = if (slotNum == startSlot) "LEADER" else "MEMBER",
                         status = if (isBooked) SeatSlotStatus.BOOKED else SeatSlotStatus.AVAILABLE,
-                        playerName = if (isBooked) "Player_$slotNum" else null
+                        occupiedByUserId = if (isBooked) 1000L + slotNum else null,
+                        occupiedByIgn = if (isBooked) "Player_$slotNum" else null
                     )
                 }
             )

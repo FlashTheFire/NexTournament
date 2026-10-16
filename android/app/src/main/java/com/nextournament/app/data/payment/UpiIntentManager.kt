@@ -10,10 +10,18 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 data class UpiAppInfo(
-    val packageName: String,
     val appName: String,
-    val icon: Drawable?
-)
+    val packageName: String,
+    val icon: Drawable? = null,
+    val isInstalled: Boolean = true
+) {
+    constructor(packageName: String, appName: String, icon: Drawable?) : this(
+        appName = appName,
+        packageName = packageName,
+        icon = icon,
+        isInstalled = true
+    )
+}
 
 @Singleton
 class UpiIntentManager @Inject constructor(
@@ -43,34 +51,31 @@ class UpiIntentManager @Inject constructor(
         merchantName: String,
         amount: Double,
         transactionRef: String,
-        note: String = "NexTournament Deposit"
+        note: String = "NexTournament Entry"
     ): Uri {
         return Uri.Builder()
             .scheme("upi")
             .authority("pay")
             .appendQueryParameter("pa", merchantVpa)
             .appendQueryParameter("pn", merchantName)
-            .appendQueryParameter("mc", "0000") // Generic merchant category
+            .appendQueryParameter("mc", "0000") // General esports category
             .appendQueryParameter("tr", transactionRef)
             .appendQueryParameter("tn", note)
-            .appendQueryParameter("am", "%.2f".format(amount))
+            .appendQueryParameter("am", String.format("%.2f", amount))
             .appendQueryParameter("cu", "INR")
             .build()
     }
 
-    fun launchUpiPayment(
-        packageName: String,
-        upiUri: Uri
-    ): Result<Unit> {
+    fun launchUpiPaymentIntent(context: Context, upiApp: UpiAppInfo, paymentUri: Uri): Boolean {
         return try {
-            val intent = Intent(Intent.ACTION_VIEW, upiUri).apply {
-                setPackage(packageName)
+            val paymentIntent = Intent(Intent.ACTION_VIEW, paymentUri).apply {
+                setPackage(upiApp.packageName)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
-            context.startActivity(intent)
-            Result.success(Unit)
+            context.startActivity(paymentIntent)
+            true
         } catch (e: Exception) {
-            Result.failure(e)
+            false
         }
     }
 }

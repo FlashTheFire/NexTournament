@@ -51,6 +51,8 @@ class SessionManager @Inject constructor(
         return deviceId
     }
 
+    fun getDeviceUuid(): String = getOrCreateDeviceId()
+
     fun isLoggedIn(): Boolean = !getAccessToken().isNullOrBlank()
 
     fun clearSession() {
