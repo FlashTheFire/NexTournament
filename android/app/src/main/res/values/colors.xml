@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="obsidian_black">#020617</color>
+    <color name="slate_surface">#131B2E</color>
+    <color name="neon_amber">#F59E0B</color>
+    <color name="cyber_emerald">#10B981</color>
+    <color name="laser_crimson">#EF4444</color>
+    <color name="neon_cyan">#06B6D4</color>
+</resources>
