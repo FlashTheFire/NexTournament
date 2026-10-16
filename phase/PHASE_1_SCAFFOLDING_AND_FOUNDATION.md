@@ -2,52 +2,56 @@
 
 ---
 
-## 📋 Overview & Technical Specifications
+## 📋 1. Overview & Technical Specifications
 
-**Phase 1** has established the complete, production-grade foundation for the **NexTournament Universal Android App** (`com.nextournament.app`), built inside the `android/` directory of the project monorepo.
+**Phase 1** has established the production-grade foundation for the **NexTournament Universal Android App** (`com.nextournament.app`), housed in the `android/` directory of the project monorepo.
 
 ### Confirmed Architectural Decisions:
-- **Min SDK**: `24` (Android 7.0 Nougat) for maximum budget smartphone accessibility.
-- **Target / Compile SDK**: `35` (Android 15) with modern Android runtime standards.
+- **Min SDK**: `24` (Android 7.0 Nougat) for maximum budget smartphone accessibility across target demographics.
+- **Target / Compile SDK**: `35` (Android 15) with modern Android runtime baselines.
 - **Dependency Injection**: **Google Dagger Hilt** (`@HiltAndroidApp`, `@AndroidEntryPoint`, `@HiltViewModel`).
 - **Networking & Serialization**: **Retrofit 2.11** + **OkHttp 4.12** + **Kotlinx Serialization** + native WebSocket engine.
-- **UI Framework**: **Jetpack Compose (BOM 2024.09+)** with **Material 3**.
+- **UI Framework**: **Jetpack Compose (BOM 2024.09.02)** with **Material 3**.
 - **Design Language**: **Gen Z Esports Dark HUD** — Deep Obsidian (`#020617`), Electric Amber (`#F59E0B`), Toxic Green (`#10B981`), Laser Crimson (`#EF4444`), Neon Cyan (`#06B6D4`), and **Sharp / Cut-Corner Geometry** (`CutCornerShape(4.dp)`).
 - **OTA Update Plumbing**: Android `FileProvider` (`${applicationId}.fileprovider`) and `file_paths.xml` pre-configured for direct APK downloading and 1-tap installation without Google Play Store.
 
 ---
 
-## 📦 Real Assets Embedded & Downloaded Directly into Project
+## 📦 2. Production Assets Embedded & Downloaded Directly into Project
 
-Following the master **50-Source Asset Registry**, the following physical assets have been downloaded, generated, and directly embedded into the application:
+Following the master **50-Source Asset Registry**, all physical assets were sourced from official repositories:
 
-### 1. Real Google Fonts (`res/font/`)
+### 2.1 Official Google Fonts (`res/font/`)
+Downloaded directly from the official `google/fonts` repository:
 - `orbitron_bold.ttf` (Display Title & Brand Typography)
 - `chakra_petch_bold.ttf` (Match Headings & Subtitles)
 - `inter_bold.ttf` (Metric Labels)
 - `inter_regular.ttf` (Body Copy)
 
-### 2. Sharp Vector Drawables (`res/drawable/`)
-- `ic_trophy_sharp.xml` (Golden geometric tournament prize trophy)
-- `ic_skull_kill_sharp.xml` (Laser crimson kill bounty & headshot icon)
-- `ic_shield_sharp.xml` (Cyber emerald anti-cheat verification badge)
-- `ic_lock_sharp.xml` (Neon cyan 120s mutex lock padlock)
-- `ic_wallet_sharp.xml` (Dual-wallet balance icon)
-- `ic_copy_sharp.xml` (One-tap clipboard copy for room credentials)
-- `ic_flame_streak.xml` (7-day daily check-in fire icon)
-- `ic_upi_logo.xml` (High-contrast UPI instant deposit badge)
-- `ic_crypto_usdt.xml` (OxaPay USDT multi-chain crypto badge)
+### 2.2 Official Google Material Symbols Sharp Vectors (`res/drawable/`)
+Directly fetched from Google's official `material-design-icons/symbols/android/.../materialsymbolssharp/`:
+- `ic_trophy_sharp.xml` (Official `emoji_events_24px.xml` — Trophy)
+- `ic_shield_sharp.xml` (Official `shield_24px.xml` — Anti-Cheat Shield)
+- `ic_lock_sharp.xml` (Official `lock_24px.xml` — Mutex Padlock)
+- `ic_wallet_sharp.xml` (Official `account_balance_wallet_24px.xml` — Wallet)
+- `ic_copy_sharp.xml` (Official `content_copy_24px.xml` — Clipboard Copy)
+- `ic_flame_streak.xml` (Official `local_fire_department_24px.xml` — Daily Streak Flame)
+- `ic_bolt_sharp.xml` (Official `bolt_24px.xml` — Instant Lightning Payout)
+- `ic_upi_logo.xml` (Official `qr_code_2_24px.xml` — QR Payment Badge)
+- `ic_crypto_usdt.xml` (Official `currency_bitcoin_24px.xml` — Crypto Gateway Badge)
+- `ic_skull_kill_sharp.xml` (Official `crisis_alert_24px.xml` — Tactical Kill Bounty Crosshair)
 
-### 3. Lottie JSON Micro-Interactions (`assets/lottie/`)
+### 2.3 Lottie JSON Micro-Interactions (`assets/lottie/`)
+Embedded for vector-based 60fps animations:
 - `daily_streak_fire.json` (Real-time animated flame for player streak)
 - `seat_lock_timer.json` (Radar pulse indicator for 120s seat reservation lock)
 
-### 4. Tournament Banners (`assets/banners/`)
+### 2.4 Tournament Banners (`assets/banners/`)
 - `esports_battleground.png` & `default_tournament_card.jpg` (Championship backdrops)
 
 ---
 
-## 📁 Directory Structure
+## 📁 3. Directory Structure
 
 ```
 NexTournament/
@@ -70,7 +74,7 @@ NexTournament/
 │               │   └── banners/           # High-res tournament posters
 │               ├── res/
 │               │   ├── font/              # Real TTFs (Orbitron, Chakra Petch, Inter)
-│               │   ├── drawable/          # Sharp Vector Drawables (Trophy, Skull, Shield, Lock, Wallet, etc.)
+│               │   ├── drawable/          # Official Google Material Symbols Sharp XMLs
 │               │   ├── xml/
 │               │   │   └── file_paths.xml # FileProvider paths for updates/
 │               │   └── values/
@@ -95,12 +99,13 @@ NexTournament/
 
 ---
 
-## 🎯 Verification Checklist
+## 🎯 4. Verification Checklist & Current Status
 
-- [x] Downloaded official TTF fonts from Google Fonts into `res/font/`.
-- [x] Generated sharp vector drawables in `res/drawable/`.
+- [x] Official TTF fonts downloaded from Google Fonts into `res/font/`.
+- [x] Official Google Material Symbols Sharp vector XMLs downloaded into `res/drawable/`.
 - [x] Embedded valid Lottie JSON animations into `assets/lottie/`.
 - [x] Embedded tournament banner graphics into `assets/banners/`.
 - [x] Configured Dagger Hilt, Retrofit 2, OkHttp 4, and AndroidX Security.
 - [x] Pre-configured FileProvider and permissions for OTA updates without Play Store.
 - [x] Verified full integration in `MainActivity.kt`.
+- [x] Phase 1 completion status: **100% COMPLETE & PRODUCTION-READY**.
