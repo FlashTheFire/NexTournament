@@ -52,9 +52,13 @@ services:
     networks:
       - nextournament-internal
       - coolify
+    ports:
+      - "0.0.0.0:8000:8000"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nextournament-api.rule=Host(`51.21.87.49`) || PathPrefix(`/api/v1`) || PathPrefix(`/updates`) || PathPrefix(`/docs`) || PathPrefix(`/openapi.json`)"
+      - "traefik.docker.network=coolify"
+      - "traefik.http.routers.nextournament-api.entrypoints=http"
+      - "traefik.http.routers.nextournament-api.rule=PathPrefix(`/api/v1`) || PathPrefix(`/updates`) || PathPrefix(`/docs`) || PathPrefix(`/openapi.json`)"
       - "traefik.http.services.nextournament-api.loadbalancer.server.port=8000"
     depends_on:
       - nextournament-db
