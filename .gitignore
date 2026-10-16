@@ -39,3 +39,8 @@ env/
 Thumbs.db
 desktop.ini
 *.tmp
+
+# Android APK binaries
+*.apk
+apk/
+
