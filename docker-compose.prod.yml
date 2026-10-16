@@ -46,7 +46,7 @@ services:
     environment:
       DATABASE_URL: "postgresql+asyncpg://nextourn_user:NextournProdSecure2026!@nextournament-db:5432/nextournament_db"
       REDIS_URL: "redis://nextournament-redis:6379/0"
-      BOT_TOKEN: "8008433431:AAFFZ-DEMO_TOKEN_NEX"
+      BOT_TOKEN: "6190619534:AAGAnxYrz55OXV362vAvhLr1JYrridNt5JY"
     volumes:
       - ./updates:/app/updates
     networks:
@@ -56,6 +56,27 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.nextournament-api.rule=Host(`51.21.87.49`) || PathPrefix(`/api/v1`) || PathPrefix(`/updates`) || PathPrefix(`/docs`) || PathPrefix(`/openapi.json`)"
       - "traefik.http.services.nextournament-api.loadbalancer.server.port=8000"
+    depends_on:
+      - nextournament-db
+      - nextournament-redis
+
+  nextournament-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nextournament-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://nextourn_user:NextournProdSecure2026!@nextournament-db:5432/nextournament_db"
+      REDIS_URL: "redis://nextournament-redis:6379/0"
+      BOT_TOKEN: "6190619534:AAGAnxYrz55OXV362vAvhLr1JYrridNt5JY"
+      BOT_MODE: "polling"
+    volumes:
+      - ./assets:/app/assets
+    networks:
+      - nextournament-internal
     depends_on:
       - nextournament-db
       - nextournament-redis
