@@ -3,6 +3,7 @@ package com.nextournament.app.ui.components
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -183,7 +184,8 @@ fun UpiDepositDialog(
                     // App 1: GPay
                     UpiAppIconButton(
                         label = "GPay",
-                        bgColor = Color(0xFF1F1F1F),
+                        iconRes = R.drawable.ic_gpay_logo,
+                        bgColor = Color.White,
                         accentColor = Color(0xFF4285F4),
                         onClick = {
                             val app = installedUpiApps.find { it.packageName.contains("google", ignoreCase = true) }
@@ -195,8 +197,9 @@ fun UpiDepositDialog(
                     // App 2: PhonePe
                     UpiAppIconButton(
                         label = "PhonePe",
-                        bgColor = Color(0xFF5F259F),
-                        accentColor = Color.White,
+                        iconRes = R.drawable.ic_phonepe_logo,
+                        bgColor = Color.Transparent,
+                        accentColor = Color(0xFF5F259F),
                         onClick = {
                             val app = installedUpiApps.find { it.packageName.contains("phonepe", ignoreCase = true) }
                                 ?: UpiAppInfo("com.phonepe.app", "PhonePe", null)
@@ -207,7 +210,8 @@ fun UpiDepositDialog(
                     // App 3: Paytm
                     UpiAppIconButton(
                         label = "Paytm",
-                        bgColor = Color(0xFF002970),
+                        iconRes = R.drawable.ic_paytm_logo,
+                        bgColor = Color.Transparent,
                         accentColor = Color(0xFF00BAF2),
                         onClick = {
                             val app = installedUpiApps.find { it.packageName.contains("paytm", ignoreCase = true) }
@@ -216,11 +220,12 @@ fun UpiDepositDialog(
                         }
                     )
 
-                    // App 4: CRED / BHIM
+                    // App 4: CRED
                     UpiAppIconButton(
                         label = "CRED",
-                        bgColor = Color(0xFF141414),
-                        accentColor = Color(0xFFF59E0B),
+                        iconRes = R.drawable.ic_cred_logo,
+                        bgColor = Color.Black,
+                        accentColor = Color.White,
                         onClick = {
                             val app = installedUpiApps.find { it.packageName.contains("cred", ignoreCase = true) }
                                 ?: UpiAppInfo("com.dreamplug.androidapp", "CRED", null)
@@ -280,6 +285,7 @@ fun UpiDepositDialog(
 @Composable
 fun UpiAppIconButton(
     label: String,
+    iconRes: Int,
     bgColor: Color,
     accentColor: Color,
     onClick: () -> Unit
@@ -287,33 +293,32 @@ fun UpiAppIconButton(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .clip(CutCornerShape(4.dp))
+            .clip(CutCornerShape(6.dp))
             .clickable { onClick() }
-            .padding(6.dp)
+            .padding(4.dp)
     ) {
         Box(
             modifier = Modifier
-                .size(46.dp)
+                .size(48.dp)
                 .clip(CutCornerShape(6.dp))
                 .background(bgColor)
-                .border(1.dp, accentColor.copy(alpha = 0.6f), CutCornerShape(6.dp)),
+                .border(1.dp, accentColor.copy(alpha = 0.5f), CutCornerShape(6.dp))
+                .padding(6.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = label.take(2).uppercase(),
-                fontFamily = OrbitronFont,
-                fontWeight = FontWeight.Black,
-                fontSize = 14.sp,
-                color = accentColor
+            Image(
+                painter = painterResource(id = iconRes),
+                contentDescription = label,
+                modifier = Modifier.fillMaxSize()
             )
         }
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = label,
             fontFamily = ChakraPetch,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.White.copy(alpha = 0.8f)
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White.copy(alpha = 0.9f)
         )
     }
 }
