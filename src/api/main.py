@@ -318,7 +318,8 @@ async def check_telegram_sync_status(token: str = Query(...)):
         if not raw_data:
             return JSONResponse(status_code=404, content={"status": "pending", "message": "Handshake awaiting user start in Telegram"})
 
-        sync_info = json.loads(raw_data)
+        data_str = raw_data.decode("utf-8") if isinstance(raw_data, (bytes, bytearray)) else raw_data
+        sync_info = json.loads(data_str)
         telegram_id = int(sync_info["telegram_id"])
 
         async with db_session() as session:
