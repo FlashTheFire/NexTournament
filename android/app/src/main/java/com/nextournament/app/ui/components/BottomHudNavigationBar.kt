@@ -23,7 +23,8 @@ import com.nextournament.app.ui.theme.*
 enum class AppNavTab(val title: String, val iconRes: Int) {
     TOURNAMENTS("MATCHES", R.drawable.ic_swords_sharp),
     WALLET("WALLET", R.drawable.ic_wallet_sharp),
-    PROFILE("PROFILE", R.drawable.ic_person_sharp)
+    PROFILE("PROFILE", R.drawable.ic_person_sharp),
+    ADMIN("ADMIN", R.drawable.ic_verified_sharp)
 }
 
 @Composable
@@ -31,6 +32,7 @@ fun BottomHudNavigationBar(
     currentTab: AppNavTab,
     onTabSelected: (AppNavTab) -> Unit,
     onOcrCameraClick: () -> Unit,
+    isAdmin: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -97,6 +99,16 @@ fun BottomHudNavigationBar(
             onClick = { onTabSelected(AppNavTab.PROFILE) },
             modifier = Modifier.weight(1f)
         )
+
+        // Optional Tab 4: ADMIN (Owner / Staff)
+        if (isAdmin) {
+            HudTabItem(
+                tab = AppNavTab.ADMIN,
+                isSelected = currentTab == AppNavTab.ADMIN,
+                onClick = { onTabSelected(AppNavTab.ADMIN) },
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
 }
 

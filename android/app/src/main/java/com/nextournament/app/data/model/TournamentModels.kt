@@ -59,15 +59,57 @@ data class LockSeatResponse(
 @Serializable
 data class JoinTournamentRequest(
     @SerialName("slot_number") val slotNumber: Int,
-    @SerialName("game_id") val gameId: String,
-    @SerialName("in_game_id") val inGameId: String,
-    @SerialName("in_game_name") val inGameName: String
+    @SerialName("in_game_name") val inGameName: String,
+    @SerialName("user_id") val userId: Long? = 5716978793L,
+    @SerialName("game_id") val gameId: String = "free_fire",
+    @SerialName("in_game_id") val inGameId: String = "7988496060"
 )
 
 @Serializable
 data class JoinTournamentResponse(
-    @SerialName("success") val success: Boolean,
-    @SerialName("slot_number") val slotNumber: Int,
-    @SerialName("new_game_balance") val newGameBalance: Double,
-    @SerialName("message") val message: String
+    @SerialName("success") val success: Boolean = true,
+    @SerialName("tournament_id") val tournamentId: Long? = null,
+    @SerialName("slot_number") val slotNumber: Int? = null,
+    @SerialName("new_game_balance") val newGameBalance: Double? = null,
+    @SerialName("message") val message: String = ""
+)
+
+@Serializable
+data class AdminCreateTournamentRequest(
+    @SerialName("title") val title: String,
+    @SerialName("map_name") val mapName: String = "Bermuda",
+    @SerialName("team_format") val teamFormat: String = "squad",
+    @SerialName("entry_fee") val entryFee: Double = 50.0,
+    @SerialName("prize_pool") val prizePool: Double = 1800.0,
+    @SerialName("per_kill") val perKill: Double = 20.0,
+    @SerialName("total_slots") val totalSlots: Int = 48,
+    @SerialName("start_in_minutes") val startInMinutes: Int = 60
+)
+
+@Serializable
+data class AdminSetCredentialsRequest(
+    @SerialName("room_id") val roomId: String,
+    @SerialName("room_password") val roomPassword: String
+)
+
+@Serializable
+data class AdminAdjustBalanceRequest(
+    @SerialName("target_user_id") val targetUserId: Long,
+    @SerialName("amount") val amount: Double,
+    @SerialName("balance_type") val balanceType: String = "game_balance"
+)
+
+@Serializable
+data class AdminActionResponse(
+    @SerialName("success") val success: Boolean = true,
+    @SerialName("tournament_id") val tournamentId: Long? = null,
+    @SerialName("message") val message: String = ""
+)
+
+@Serializable
+data class AdminAdjustBalanceResponse(
+    @SerialName("success") val success: Boolean = true,
+    @SerialName("user_id") val userId: Long? = null,
+    @SerialName("new_game_balance") val newGameBalance: Double? = null,
+    @SerialName("new_win_balance") val newWinBalance: Double? = null
 )

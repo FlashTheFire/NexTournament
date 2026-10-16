@@ -14,8 +14,11 @@ interface AuthApiService {
     @POST("/api/v1/auth/telegram-sync")
     suspend fun syncWithTelegram(@Body request: TelegramSyncRequest): Response<AuthResponse>
 
+    @POST("/api/v1/auth/quick-login")
+    suspend fun quickLogin(@Body request: QuickLoginRequest): Response<AuthResponse>
+
     @GET("/api/v1/user/profile")
-    suspend fun getProfile(): Response<UserProfileDto>
+    suspend fun getProfile(@Query("user_id") userId: Long? = null): Response<UserProfileDto>
 
     @PUT("/api/v1/user/game-profile")
     suspend fun updateGameProfile(@Body request: UpdateGameProfileRequest): Response<UserProfileDto>
@@ -46,7 +49,7 @@ interface TournamentApiService {
 
 interface WalletApiService {
     @GET("/api/v1/wallet/summary")
-    suspend fun getWalletSummary(): Response<WalletSummaryDto>
+    suspend fun getWalletSummary(@Query("user_id") userId: Long? = null): Response<WalletSummaryDto>
 
     @POST("/api/v1/wallet/deposit/upi")
     suspend fun initiateUpiDeposit(@Body request: UpiDepositRequest): Response<UpiDepositResponse>
@@ -56,6 +59,20 @@ interface WalletApiService {
 
     @POST("/api/v1/wallet/withdraw")
     suspend fun requestWithdrawal(@Body request: WithdrawalRequest): Response<WithdrawalResponse>
+}
+
+interface AdminApiService {
+    @POST("/api/v1/admin/tournaments")
+    suspend fun createTournament(@Body request: AdminCreateTournamentRequest): Response<AdminActionResponse>
+
+    @POST("/api/v1/admin/tournaments/{id}/credentials")
+    suspend fun setCredentials(
+        @Path("id") tournamentId: Long,
+        @Body request: AdminSetCredentialsRequest
+    ): Response<AdminActionResponse>
+
+    @POST("/api/v1/admin/users/adjust-balance")
+    suspend fun adjustBalance(@Body request: AdminAdjustBalanceRequest): Response<AdminAdjustBalanceResponse>
 }
 
 interface AppVersionApiService {

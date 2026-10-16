@@ -72,4 +72,9 @@ object NetworkModule {
     @Singleton
     fun provideAppVersionApiService(retrofit: Retrofit): AppVersionApiService =
         retrofit.create(AppVersionApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAdminApiService(retrofit: Retrofit): AdminApiService =
+        retrofit.create(AdminApiService::class.java)
 }

@@ -29,6 +29,11 @@ data class TokenRefreshRequest(
 )
 
 @Serializable
+data class QuickLoginRequest(
+    @SerialName("user_id") val userId: Long
+)
+
+@Serializable
 data class AuthResponse(
     @SerialName("access_token") val accessToken: String,
     @SerialName("refresh_token") val refreshToken: String,

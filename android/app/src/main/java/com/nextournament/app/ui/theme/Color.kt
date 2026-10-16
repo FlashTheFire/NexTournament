@@ -22,6 +22,9 @@ val NeonAmberBright = Color(0xFFFBBF24)     // Active hover & high glow
 val NeonAmberGlow = Color(0x33F59E0B)       // Ambient glow (20% alpha)
 
 val CyberAmber = NeonAmber
+val AmberGold = NeonAmberBright
+val CyberDarkCard = SlateCardSurface
+val DarkBackground = SlateBackground
 
 val CyberEmerald = Color(0xFF10B981)        // Success / Available Seats / Deposits
 val CyberEmeraldBright = Color(0xFF00FF66)  // Live heartbeat indicator

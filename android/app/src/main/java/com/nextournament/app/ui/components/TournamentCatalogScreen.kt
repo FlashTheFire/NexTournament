@@ -36,7 +36,7 @@ fun TournamentCatalogScreen(
 
     val filteredTournaments = remember(selectedFormat, tournaments) {
         tournaments.filter { t ->
-            val gameMatches = t.game.contains("Free Fire", ignoreCase = true)
+            val gameMatches = t.game.replace("_", " ").contains("Free Fire", ignoreCase = true) || t.game.isBlank()
             val formatMatches = if (selectedFormat == "ALL") true else t.format.equals(selectedFormat, ignoreCase = true)
             gameMatches && formatMatches
         }

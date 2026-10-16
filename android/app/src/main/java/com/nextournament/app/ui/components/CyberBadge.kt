@@ -18,7 +18,8 @@ fun CyberBadge(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = NeonAmber,
-    backgroundColor: Color = ObsidianBlack
+    backgroundColor: Color = ObsidianBlack,
+    textColor: Color = color
 ) {
     Surface(
         shape = CutCornerBadge,
@@ -28,7 +29,7 @@ fun CyberBadge(
     ) {
         Text(
             text = text.uppercase(),
-            color = color,
+            color = textColor,
             fontSize = 10.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Monospace,

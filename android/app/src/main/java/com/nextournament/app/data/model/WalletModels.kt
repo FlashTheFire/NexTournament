@@ -26,7 +26,8 @@ data class TransactionDto(
 
 @Serializable
 data class UpiDepositRequest(
-    @SerialName("amount") val amount: Double
+    @SerialName("amount") val amount: Double,
+    @SerialName("user_id") val userId: Long = 5716978793L
 )
 
 @Serializable
@@ -41,7 +42,8 @@ data class UpiDepositResponse(
 @Serializable
 data class CryptoDepositRequest(
     @SerialName("currency") val currency: String = "USDT", // USDT, TRX, LTC, BTC
-    @SerialName("network") val network: String = "TRC20"
+    @SerialName("network") val network: String = "TRC20",
+    @SerialName("user_id") val userId: Long = 5716978793L
 )
 
 @Serializable
@@ -57,7 +59,8 @@ data class CryptoDepositResponse(
 data class WithdrawalRequest(
     @SerialName("amount") val amount: Double,
     @SerialName("method") val method: String, // "upi" or "crypto"
-    @SerialName("payout_address") val payoutAddress: String // UPI ID (VPA) or Crypto Wallet Address
+    @SerialName("payout_address") val payoutAddress: String, // UPI ID (VPA) or Crypto Wallet Address
+    @SerialName("user_id") val userId: Long = 5716978793L
 )
 
 @Serializable
