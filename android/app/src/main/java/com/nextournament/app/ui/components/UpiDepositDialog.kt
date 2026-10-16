@@ -79,7 +79,7 @@ fun UpiDepositDialog(
                             painter = painterResource(id = R.drawable.ic_upi_logo),
                             contentDescription = "UPI",
                             tint = Color.Unspecified,
-                            modifier = Modifier.size(30.dp)
+                            modifier = Modifier.size(width = 46.dp, height = 23.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
