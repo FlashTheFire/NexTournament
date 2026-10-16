@@ -165,7 +165,7 @@ async def init_database():
                 user_id=5716978793,
                 amount=Decimal("500.00"),
                 balance_type=BalanceType.GAME_BALANCE,
-                transaction_type=TransactionType.DEPOSIT,
+                type=TransactionType.DEPOSIT,
                 reference_id="UPI_INIT_89102",
                 description="Instant UPI Deposit (Paytm QR)"
             )
@@ -173,7 +173,7 @@ async def init_database():
                 user_id=5716978793,
                 amount=Decimal("-50.00"),
                 balance_type=BalanceType.GAME_BALANCE,
-                transaction_type=TransactionType.TOURNAMENT_FEE,
+                type=TransactionType.TOURNAMENT_FEE,
                 reference_id="MATCH_101",
                 description="Entry Fee: Free Fire Squad War #101"
             )
@@ -181,7 +181,7 @@ async def init_database():
                 user_id=5716978793,
                 amount=Decimal("350.00"),
                 balance_type=BalanceType.WIN_BALANCE,
-                transaction_type=TransactionType.TOURNAMENT_PRIZE,
+                type=TransactionType.TOURNAMENT_PRIZE,
                 reference_id="WIN_MATCH_98",
                 description="Tournament Victory #1 (Chicken Dinner)"
             )

@@ -453,7 +453,7 @@ async def join_tournament(tournament_id: int, req: JoinTournamentRequest):
             user_id=req.user_id,
             amount=-fee,
             balance_type=BalanceType.GAME_BALANCE,
-            transaction_type=TransactionType.TOURNAMENT_FEE,
+            type=TransactionType.TOURNAMENT_FEE,
             reference_id=f"MATCH_{tournament_id}",
             description=f"Entry Fee: {t.title} (Slot #{req.slot_number})"
         )
@@ -545,7 +545,7 @@ async def get_wallet_summary(user_id: int = Query(default=5716978793)):
         dtos = [
             TransactionDto(
                 id=tx.id,
-                type=tx.transaction_type.value if hasattr(tx.transaction_type, 'value') else str(tx.transaction_type),
+                type=tx.type.value if hasattr(tx.type, 'value') else str(tx.type),
                 amount=float(tx.amount),
                 balance_type=tx.balance_type.value if hasattr(tx.balance_type, 'value') else str(tx.balance_type),
                 description=tx.description or "Transaction",
@@ -623,7 +623,7 @@ async def request_payout(req: WithdrawalRequest):
             user_id=req.user_id,
             amount=-Decimal(str(req.amount)),
             balance_type=BalanceType.WIN_BALANCE,
-            transaction_type=TransactionType.WITHDRAWAL,
+            type=TransactionType.WITHDRAWAL,
             reference_id=f"WID_{wid}",
             description=f"Withdrawal Payout ({req.method.upper()} to {req.payout_address})"
         )
@@ -717,7 +717,7 @@ async def admin_adjust_balance(req: AdjustBalanceRequest):
             user_id=req.target_user_id,
             amount=amt,
             balance_type=bt,
-            transaction_type=TransactionType.ADMIN_ADJUSTMENT,
+            type=TransactionType.ADMIN_ADJUSTMENT,
             description="Admin Manual Balance Adjustment"
         )
         session.add(tx)
