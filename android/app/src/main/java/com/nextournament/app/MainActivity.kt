@@ -85,6 +85,10 @@ fun MainAppOrchestrator(
     var activeTournamentForSeats by remember { mutableStateOf<TournamentEntity?>(null) }
     var selectedSeatForCheckout by remember { mutableStateOf<SeatSlot?>(null) }
     var activeRoomVaultTournament by remember { mutableStateOf<TournamentEntity?>(null) }
+    var activeChatTournament by remember { mutableStateOf<TournamentEntity?>(null) }
+    var joinedTournamentIds by remember {
+        mutableStateOf(setOf(101L)) // Default first tournament (Bermuda Masters Series #42) enrolled for immediate testing
+    }
 
     // Financial Modals State
     var showUpiDepositModal by remember { mutableStateOf(false) }
@@ -270,6 +274,7 @@ fun MainAppOrchestrator(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(SlateBackground)
+                    .statusBarsPadding()
                     .padding(horizontal = 16.dp, vertical = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -318,8 +323,15 @@ fun MainAppOrchestrator(
                 AppNavTab.TOURNAMENTS -> {
                     TournamentCatalogScreen(
                         tournaments = sampleTournaments,
+                        joinedTournamentIds = joinedTournamentIds,
                         onTournamentClick = { tournament ->
                             selectedTournamentForRules = tournament
+                        },
+                        onRoomClick = { tournament ->
+                            activeRoomVaultTournament = tournament
+                        },
+                        onChatClick = { tournament ->
+                            activeChatTournament = tournament
                         }
                     )
                 }
@@ -466,6 +478,7 @@ fun MainAppOrchestrator(
                             currentUser = currentUser.copy(
                                 gameBalance = (currentUser.gameBalance - tournament.entryFee).coerceAtLeast(0.0)
                             )
+                            joinedTournamentIds = joinedTournamentIds + tournament.id
                             selectedSeatForCheckout = null
                             activeTournamentForSeats = null
                             activeRoomVaultTournament = tournament
@@ -490,6 +503,16 @@ fun MainAppOrchestrator(
                     isUnlocked = true,
                     unlockCountdownSeconds = 0,
                     onDismiss = { activeRoomVaultTournament = null }
+                )
+            }
+
+            // MODAL 4B: Tactical In-Game HUD Chat Drawer (Squad Team Comms or Solo Match Lobby)
+            activeChatTournament?.let { tournament ->
+                MatchChatDrawer(
+                    tournamentTitle = tournament.title,
+                    teamFormat = tournament.format,
+                    userIgn = currentUser.ign,
+                    onDismiss = { activeChatTournament = null }
                 )
             }
 

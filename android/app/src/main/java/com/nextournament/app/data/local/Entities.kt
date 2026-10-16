@@ -92,6 +92,8 @@ data class UserEntity(
     val id: Long get() = userId
     val walletBalance: Double get() = gameBalance + winBalance
     val winningsBalance: Double get() = winBalance
+    val ign: String get() = inGameName ?: username
+
 
     fun toDto(): UserProfileDto = UserProfileDto(
         userId = userId,

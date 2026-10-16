@@ -41,6 +41,7 @@ fun BottomHudNavigationBar(
                 BorderStroke(BrutalistBorderThin, SlateElevated),
                 CutCornerShape(0.dp)
             )
+            .navigationBarsPadding()
             .padding(horizontal = 12.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

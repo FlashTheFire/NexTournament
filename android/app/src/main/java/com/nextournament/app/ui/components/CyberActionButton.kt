@@ -24,7 +24,9 @@ fun CyberActionButton(
     accentColor: Color = NeonAmber,
     textColor: Color = ObsidianBlack,
     enabled: Boolean = true,
-    iconRes: Int? = null
+    iconRes: Int? = null,
+    height: androidx.compose.ui.unit.Dp = 44.dp,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 8.dp)
 ) {
     Button(
         onClick = onClick,
@@ -37,8 +39,8 @@ fun CyberActionButton(
             disabledContainerColor = SlateElevated,
             disabledContentColor = TextDisabled
         ),
-        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
-        modifier = modifier.height(44.dp)
+        contentPadding = contentPadding,
+        modifier = modifier.height(height)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

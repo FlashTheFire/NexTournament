@@ -26,16 +26,23 @@ fun TournamentHudCard(
     slotsStatus: String,
     modifier: Modifier = Modifier,
     perKillBounty: String? = null,
+    isJoined: Boolean = false,
+    format: String = "SQUAD",
+    onRoomClick: () -> Unit = {},
+    onChatClick: () -> Unit = {},
     onJoinClick: () -> Unit
 ) {
     Card(
         shape = CutCornerCard, // Chamfered corners (No bubbly borders)
         colors = CardDefaults.cardColors(containerColor = SlateCardSurface),
-        border = BorderStroke(BrutalistBorderThin, SlateElevated),
+        border = BorderStroke(
+            BrutalistBorderThin,
+            if (isJoined) CyberEmerald.copy(alpha = 0.5f) else SlateElevated
+        ),
         modifier = modifier.fillMaxWidth().padding(vertical = 6.dp)
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
-            // Header Row: Game Badge + Verified Shield + Map
+            // Header Row: Game Badge + Verified Shield + Joined Badge + Map
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -54,6 +61,14 @@ fun TournamentHudCard(
                         tint = CyberEmerald,
                         modifier = Modifier.size(16.dp)
                     )
+                    if (isJoined) {
+                        Spacer(modifier = Modifier.width(6.dp))
+                        CyberBadge(
+                            text = "ENROLLED",
+                            color = CyberEmerald,
+                            backgroundColor = SlateElevated
+                        )
+                    }
                 }
                 Text(
                     text = "MAP: $map".uppercase(),
@@ -74,7 +89,7 @@ fun TournamentHudCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Bottom Metric Row: Trophy Prize, Kill Bounty / Entry, and Join Action
+            // Bottom Metric Row: Trophy Prize, Kill Bounty / Entry, and Join/Room/Chat Actions
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -124,12 +139,38 @@ fun TournamentHudCard(
                     }
                 }
 
-                CyberActionButton(
-                    text = "JOIN ($slotsStatus)",
-                    onClick = onJoinClick,
-                    accentColor = NeonAmber,
-                    textColor = ObsidianBlack
-                )
+                if (isJoined) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CyberActionButton(
+                            text = "ROOM",
+                            onClick = onRoomClick,
+                            accentColor = CyberEmerald,
+                            textColor = ObsidianBlack,
+                            iconRes = R.drawable.ic_vpn_key_sharp,
+                            height = 38.dp,
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
+                        )
+                        CyberActionButton(
+                            text = if (format.equals("SOLO", ignoreCase = true)) "LOBBY" else "CHAT",
+                            onClick = onChatClick,
+                            accentColor = ElectricBlue,
+                            textColor = ObsidianBlack,
+                            iconRes = R.drawable.ic_flame_streak,
+                            height = 38.dp,
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
+                        )
+                    }
+                } else {
+                    CyberActionButton(
+                        text = "JOIN ($slotsStatus)",
+                        onClick = onJoinClick,
+                        accentColor = NeonAmber,
+                        textColor = ObsidianBlack
+                    )
+                }
             }
         }
     }
