@@ -119,6 +119,9 @@ Detailed technical documents are available in the [`docs/`](file:///d:/Nex-Proje
 - [Database Schema & Data Dictionary](file:///d:/Nex-Projects/NexTournament/docs/03_DATABASE_SCHEMA_AND_DATA_DICTIONARY.md)
 - [API Integrations Specification](file:///d:/Nex-Projects/NexTournament/docs/04_API_INTEGRATIONS_SPECIFICATION.md)
 - [Deployment & Operations Runbook](file:///d:/Nex-Projects/NexTournament/docs/07_DEPLOYMENT_AND_OPERATIONS_RUNBOOK.md)
+- [Universal Esports App PRD](file:///d:/Nex-Projects/NexTournament/docs/15_UNIVERSAL_APP_PRODUCT_REQUIREMENTS_DOCUMENT.md)
+- [Unified API & Shared Database Architecture](file:///d:/Nex-Projects/NexTournament/docs/16_UNIFIED_API_AND_SHARED_DATABASE_ARCHITECTURE.md)
+- [Android App Architecture & In-App OTA Update Engine](file:///d:/Nex-Projects/NexTournament/docs/17_ANDROID_APP_TECHNICAL_ARCHITECTURE_AND_OTA.md)
 
 ---
 

@@ -22,6 +22,9 @@ Welcome to the complete engineering and operational documentation for **NexTourn
 | [12_PHASE_4_IMPLEMENTATION_PLAN.md](file:///d:/Nex-Projects/NexTournament/docs/12_PHASE_4_IMPLEMENTATION_PLAN.md) | **Phase 4 Detailed Implementation Plan** | Dual-wallet architecture, Paytm UPI QR deposits, OxaPay crypto gateway, and hybrid approval queues. |
 | [13_PHASE_5_IMPLEMENTATION_PLAN.md](file:///d:/Nex-Projects/NexTournament/docs/13_PHASE_5_IMPLEMENTATION_PLAN.md) | **Phase 5 Detailed Implementation Plan** | Gemini AI Vision OCR scoreboard reader, player proof submissions, T-10 auto-cancellation, referrals, and daily streaks. |
 | [14_PHASE_6_IMPLEMENTATION_PLAN.md](file:///d:/Nex-Projects/NexTournament/docs/14_PHASE_6_IMPLEMENTATION_PLAN.md) | **Phase 6 Detailed Implementation Plan** | Master application supervisor (main.py), FSM storage, Docker orchestration, and live launch readiness. |
+| [15_UNIVERSAL_APP_PRODUCT_REQUIREMENTS_DOCUMENT.md](file:///d:/Nex-Projects/NexTournament/docs/15_UNIVERSAL_APP_PRODUCT_REQUIREMENTS_DOCUMENT.md) | **Universal Esports App PRD** | Multi-game product requirements (Free Fire, BGMI, CODM, Valorant), cinema seat booking, T-15m vault, and OTA updates. |
+| [16_UNIFIED_API_AND_SHARED_DATABASE_ARCHITECTURE.md](file:///d:/Nex-Projects/NexTournament/docs/16_UNIFIED_API_AND_SHARED_DATABASE_ARCHITECTURE.md) | **Unified API & Shared Database Architecture** | Single shared PostgreSQL & Redis design across Telegram Bot, Android App & Web, FastAPI REST/WS, and schema migrations. |
+| [17_ANDROID_APP_TECHNICAL_ARCHITECTURE_AND_OTA.md](file:///d:/Nex-Projects/NexTournament/docs/17_ANDROID_APP_TECHNICAL_ARCHITECTURE_AND_OTA.md) | **Android App Architecture & In-App OTA Engine** | Kotlin/Jetpack Compose tech stack, independent in-app self-update system without Play Store, and anti-cheat defenses. |
 
 ---
 
