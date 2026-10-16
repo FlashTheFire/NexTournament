@@ -8,8 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -20,29 +19,61 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.nextournament.app.data.model.UpdateCheckResponse
+import com.nextournament.app.data.ota.DownloadState
+import com.nextournament.app.data.ota.OtaUpdateManager
+import com.nextournament.app.data.security.AntiCheatManager
+import com.nextournament.app.data.security.DeviceIntegrityTier
+import com.nextournament.app.data.security.DeviceSecurityReport
+import com.nextournament.app.ui.components.AntiCheatViolationDialog
 import com.nextournament.app.ui.components.CyberBadge
+import com.nextournament.app.ui.components.FlexibleUpdateBanner
+import com.nextournament.app.ui.components.ForcedUpdateDialog
 import com.nextournament.app.ui.components.TournamentHudCard
 import com.nextournament.app.ui.theme.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var antiCheatManager: AntiCheatManager
+
+    @Inject
+    lateinit var otaUpdateManager: OtaUpdateManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val securityReport = antiCheatManager.evaluateDeviceIntegrity()
+
         setContent {
             NexTournamentTheme {
-                MainLobbyScreen()
+                MainLobbyScreen(
+                    securityReport = securityReport,
+                    otaUpdateManager = otaUpdateManager
+                )
             }
         }
     }
 }
 
 @Composable
-fun MainLobbyScreen() {
+fun MainLobbyScreen(
+    securityReport: DeviceSecurityReport? = null,
+    otaUpdateManager: OtaUpdateManager? = null
+) {
+    val coroutineScope = rememberCoroutineScope()
+    var showAntiCheatModal by remember {
+        mutableStateOf(securityReport?.tier == DeviceIntegrityTier.ROOTED || securityReport?.tier == DeviceIntegrityTier.HOOK_DETECTED)
+    }
+
+    var updateResponse by remember { mutableStateOf<UpdateCheckResponse?>(null) }
+    var downloadState by remember { mutableStateOf<DownloadState>(DownloadState.Idle) }
+    var isFlexibleBannerDismissed by remember { mutableStateOf(false) }
+
     // Real Lottie animation loaded from android/app/src/main/assets/lottie/daily_streak_fire.json
-    val streakComposition by rememberLottieComposition(
-        LottieCompositionSpec.Asset("lottie/daily_streak_fire.json")
-    )
 
     Scaffold(
         containerColor = ObsidianBlack,
@@ -182,6 +213,59 @@ fun MainLobbyScreen() {
                     onJoinClick = { /* Seat picker navigation */ }
                 )
             }
+        }
+
+        // 1. Flexible Ambient Update Banner (Optional updates)
+        updateResponse?.let { info ->
+            if (!info.isForced && !isFlexibleBannerDismissed) {
+                FlexibleUpdateBanner(
+                    isVisible = true,
+                    updateInfo = info,
+                    onDownloadClick = {
+                        coroutineScope.launch {
+                            otaUpdateManager?.downloadApkWithProgress(info.apkUrl, info.apkSha256)?.collect { state ->
+                                downloadState = state
+                                if (state is DownloadState.Success) {
+                                    otaUpdateManager.promptInstallApk(state.apkFile)
+                                }
+                            }
+                        }
+                    },
+                    onDismissClick = { isFlexibleBannerDismissed = true }
+                )
+            }
+        }
+
+        // 2. Critical Forced Update Dialog (Blocks entire UI)
+        updateResponse?.let { info ->
+            if (info.isForced) {
+                ForcedUpdateDialog(
+                    updateInfo = info,
+                    downloadState = downloadState,
+                    onStartDownload = {
+                        coroutineScope.launch {
+                            otaUpdateManager?.downloadApkWithProgress(info.apkUrl, info.apkSha256)?.collect { state ->
+                                downloadState = state
+                            }
+                        }
+                    },
+                    onInstallApk = {
+                        (downloadState as? DownloadState.Success)?.let { success ->
+                            otaUpdateManager?.promptInstallApk(success.apkFile)
+                        }
+                    }
+                )
+            }
+        }
+
+        // 3. Hardware Anti-Cheat Violation Modal
+        if (showAntiCheatModal && securityReport != null) {
+            AntiCheatViolationDialog(
+                securityReport = securityReport,
+                onDismissOrAcknowledge = {
+                    showAntiCheatModal = false
+                }
+            )
         }
     }
 }
