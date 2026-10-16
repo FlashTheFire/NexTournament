@@ -12,6 +12,22 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <!-- Android 11+ Package Visibility for UPI Apps & Games -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="upi" />
+        </intent>
+        <package android:name="com.google.android.apps.nbu.paisa.user" />
+        <package android:name="com.phonepe.app" />
+        <package android:name="net.one97.paytm" />
+        <package android:name="in.org.npci.upiapp" />
+        <package android:name="com.dreamplug.androidapp" />
+        <package android:name="com.dts.freefiremax" />
+        <package android:name="com.dts.freefireth" />
+        <package android:name="com.pubg.imobile" />
+    </queries>
+
     <application
         android:name=".NexTournamentApplication"
         android:allowBackup="false"
