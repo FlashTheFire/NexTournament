@@ -179,3 +179,21 @@ To ensure competitive integrity and prevent malicious tampering, the Android cli
 - **Network Resilience**: Full offline caching of static assets (character avatars, rank badges, weapon skins); graceful auto-reconnect for WebSockets.
 - **Battery & Resource Efficiency**: Low background CPU footprint; background work handled via modern `WorkManager` with exponential backoff.
 - **Scalability**: Backend designed to support 50,000 concurrent active app sessions and 500 simultaneous tournament rooms.
+
+---
+
+## 8. Gen Z Cyber-Esports Aesthetic & 50-Source Asset Pipeline
+
+The visual design and asset sourcing across the Android app, Web, and Bot are governed by the **[18_GEN_Z_ESPORTS_DESIGN_SYSTEM_AND_ASSET_REGISTRY.md](file:///d:/Nex-Projects/NexTournament/docs/18_GEN_Z_ESPORTS_DESIGN_SYSTEM_AND_ASSET_REGISTRY.md)** standard:
+
+1. **Aesthetic Principles**:
+   - **Sharp & Angular Geometry**: Mandatory `CutCornerShape` or `0dp` sharp corners for buttons, cards, dialogs, and badges. Bubbly rounded corners are strictly prohibited on core interactive components.
+   - **Pure Dark Palette**: Deep Obsidian (`#020617`) and Slate surfaces (`#0B0F19`, `#131B2E`) optimized for OLED screens.
+   - **Tactical Neo-Brutalist HUD**: 1.5dp solid neon borders (`BorderStroke(1.5.dp, NeonAmber)`) with ambient glow effects.
+2. **50-Source Master Asset Integration**:
+   - **UI Kits & Systems**: Architecture derived from **Untitled UI**, **shadcn/ui (Obra)**, **Neo Brutalism UI Library**, and **Glow UI**.
+   - **Vector Iconography**: Exclusively sharp icon libraries: **Keyline Icons (Sharp)**, **Material Symbols (Sharp)**, **Lucide**, and **Tabler**.
+   - **Imagery & Game Art**: 4K tournament hero backdrops from **StockCake Cyberpunk**, **Unsplash Gaming**, **Pexels Esports**, and **PurePNG**.
+   - **Motion & Videos**: Looping intro reels from **Mixkit Cyberpunk**, ambient HUD video loops from **Pixabay Videos**, and micro-interactions from **LottieFiles Gaming**.
+   - **Typography**: Display titles using **Clash Display** (Fontshare) and **Orbitron / Chakra Petch** (Google Fonts); UI body copy using **Inter**.
+

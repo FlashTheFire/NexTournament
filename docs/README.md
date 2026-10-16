@@ -25,6 +25,7 @@ Welcome to the complete engineering and operational documentation for **NexTourn
 | [15_UNIVERSAL_APP_PRODUCT_REQUIREMENTS_DOCUMENT.md](file:///d:/Nex-Projects/NexTournament/docs/15_UNIVERSAL_APP_PRODUCT_REQUIREMENTS_DOCUMENT.md) | **Universal Esports App PRD** | Multi-game product requirements (Free Fire, BGMI, CODM, Valorant), cinema seat booking, T-15m vault, and OTA updates. |
 | [16_UNIFIED_API_AND_SHARED_DATABASE_ARCHITECTURE.md](file:///d:/Nex-Projects/NexTournament/docs/16_UNIFIED_API_AND_SHARED_DATABASE_ARCHITECTURE.md) | **Unified API & Shared Database Architecture** | Single shared PostgreSQL & Redis design across Telegram Bot, Android App & Web, FastAPI REST/WS, and schema migrations. |
 | [17_ANDROID_APP_TECHNICAL_ARCHITECTURE_AND_OTA.md](file:///d:/Nex-Projects/NexTournament/docs/17_ANDROID_APP_TECHNICAL_ARCHITECTURE_AND_OTA.md) | **Android App Architecture & In-App OTA Engine** | Kotlin/Jetpack Compose tech stack, independent in-app self-update system without Play Store, and anti-cheat defenses. |
+| [18_GEN_Z_ESPORTS_DESIGN_SYSTEM_AND_ASSET_REGISTRY.md](file:///d:/Nex-Projects/NexTournament/docs/18_GEN_Z_ESPORTS_DESIGN_SYSTEM_AND_ASSET_REGISTRY.md) | **Gen Z Design System & 50 Asset Registry** | Curated 50-source matrix (UI kits, sharp icons, 4K wallpapers, videos, buttons, palettes), angular HUD shapes, and Compose tokens. |
 
 ---
 

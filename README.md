@@ -122,6 +122,7 @@ Detailed technical documents are available in the [`docs/`](file:///d:/Nex-Proje
 - [Universal Esports App PRD](file:///d:/Nex-Projects/NexTournament/docs/15_UNIVERSAL_APP_PRODUCT_REQUIREMENTS_DOCUMENT.md)
 - [Unified API & Shared Database Architecture](file:///d:/Nex-Projects/NexTournament/docs/16_UNIFIED_API_AND_SHARED_DATABASE_ARCHITECTURE.md)
 - [Android App Architecture & In-App OTA Update Engine](file:///d:/Nex-Projects/NexTournament/docs/17_ANDROID_APP_TECHNICAL_ARCHITECTURE_AND_OTA.md)
+- [Gen Z Esports Design System & 50-Source Asset Registry](file:///d:/Nex-Projects/NexTournament/docs/18_GEN_Z_ESPORTS_DESIGN_SYSTEM_AND_ASSET_REGISTRY.md)
 
 ---
 

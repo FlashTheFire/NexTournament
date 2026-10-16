@@ -25,7 +25,10 @@ The **NexTournament Android App** is engineered as a modern, high-performance na
 
 ## 2. UI/UX Architecture & Screen Matrix
 
-The application UI is crafted in an immersive **Cyberpunk / Esports Dark Mode** aesthetic (deep slate `#0F172A`, obsidian `#020617`, electric amber `#F59E0B`, crimson `#EF4444`, and neon emerald `#10B981`).
+The application UI is crafted in an immersive **Gen Z Esports Dark Mode** aesthetic adhering to the master standard defined in **[18_GEN_Z_ESPORTS_DESIGN_SYSTEM_AND_ASSET_REGISTRY.md](file:///d:/Nex-Projects/NexTournament/docs/18_GEN_Z_ESPORTS_DESIGN_SYSTEM_AND_ASSET_REGISTRY.md)**:
+- **Geometry**: Sharp and angular corners (`CutCornerShape(4.dp)` / `RectangleShape`), eliminating generic rounded corners.
+- **Palette**: Deep Obsidian (`#020617`), Slate (`#0F172A`), Electric Amber (`#F59E0B`), Laser Crimson (`#EF4444`), Toxic Emerald (`#10B981`), and Neon Cyan (`#06B6D4`).
+- **Assets**: Built using the **50-Source Asset Pipeline** (Keyline Sharp Icons, StockCake 4K backgrounds, Mixkit video loops, Lottie micro-interactions, and Clash Display / Inter fonts).
 
 ```
                               ┌───────────────────────────────────┐
