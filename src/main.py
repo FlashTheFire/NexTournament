@@ -79,6 +79,7 @@ async def setup_bot_commands(bot: Bot) -> None:
         BotCommand(command="support", description="📞 24/7 Customer Support & FAQ"),
         BotCommand(command="status", description="⚡ Real-Time System Telemetry"),
         BotCommand(command="language", description="🌐 Switch Interface Language"),
+        BotCommand(command="sync", description="📱 Link Session with NexTournament Android App"),
         BotCommand(command="admin", description="👮‍♂️ Staff Operations Console"),
     ]
     try:

@@ -33,6 +33,7 @@ import com.nextournament.app.data.network.WalletApiService
 import com.nextournament.app.data.ota.DownloadState
 import com.nextournament.app.data.ota.OtaUpdateManager
 import com.nextournament.app.data.payment.UpiAppInfo
+import com.nextournament.app.data.payment.UpiIntentManager
 import com.nextournament.app.data.security.AntiCheatManager
 import com.nextournament.app.data.security.DeviceIntegrityTier
 import com.nextournament.app.data.security.DeviceSecurityReport
@@ -67,6 +68,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var adminApiService: AdminApiService
 
+    @Inject
+    lateinit var upiIntentManager: UpiIntentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
@@ -82,7 +86,8 @@ class MainActivity : ComponentActivity() {
                     authApiService = authApiService,
                     tournamentApiService = tournamentApiService,
                     walletApiService = walletApiService,
-                    adminApiService = adminApiService
+                    adminApiService = adminApiService,
+                    upiIntentManager = upiIntentManager
                 )
             }
         }
@@ -97,7 +102,8 @@ fun MainAppOrchestrator(
     authApiService: AuthApiService?,
     tournamentApiService: TournamentApiService?,
     walletApiService: WalletApiService?,
-    adminApiService: AdminApiService?
+    adminApiService: AdminApiService?,
+    upiIntentManager: UpiIntentManager?
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -120,8 +126,8 @@ fun MainAppOrchestrator(
     var showAiSupportModal by remember { mutableStateOf(false) }
 
     // Admin & Auth Modals State
-    val isInitiallyLoggedIn = sessionManager?.isLoggedIn() == true
-    var showAuthDialog by remember { mutableStateOf(!isInitiallyLoggedIn) }
+    var isLoggedIn by remember { mutableStateOf(sessionManager?.isLoggedIn() == true) }
+    var showHeroAuthScreen by remember { mutableStateOf(!isLoggedIn) }
     var showAdminDialog by remember { mutableStateOf(false) }
 
     // OCR Scorecard Proof Modal State
@@ -139,24 +145,24 @@ fun MainAppOrchestrator(
     var downloadState by remember { mutableStateOf<DownloadState>(DownloadState.Idle) }
     var isFlexibleBannerDismissed by remember { mutableStateOf(false) }
 
-    // User State - Defaults to Superadmin Harsh if logged in, otherwise default guest/player
-    val savedUserId = sessionManager?.getUserId()?.takeIf { it > 0 } ?: 5716978793L
+    // User State - Pure clean defaults on fresh startup
+    val savedUserId = sessionManager?.getUserId()?.takeIf { it > 0 } ?: 0L
     var currentUser by remember {
         mutableStateOf(
             UserEntity(
                 userId = savedUserId,
-                username = if (savedUserId == 5716978793L) "NexAdmin" else "FlashFire99",
-                firstName = if (savedUserId == 5716978793L) "Harsh (Owner)" else "Harsh",
+                username = if (savedUserId == 5716978793L) "NexAdmin" else if (savedUserId > 0) "Player_$savedUserId" else "Guest",
+                firstName = if (savedUserId == 5716978793L) "Harsh (Owner)" else if (savedUserId > 0) "Player" else "Guest Player",
                 role = if (savedUserId == 5716978793L) "superadmin" else "user",
-                gameBalance = if (savedUserId == 5716978793L) 5000.0 else 500.0,
-                winBalance = if (savedUserId == 5716978793L) 2500.0 else 200.0,
+                gameBalance = 0.0,
+                winBalance = 0.0,
                 bonusBalance = 0.0,
-                phoneNumber = "+91 79884 96060",
-                inGameName = "NEX_HARSH_VIP",
-                freeFireUid = "7988496060",
-                dailyStreak = 7,
-                verificationLevel = 2,
-                isVerified = true
+                phoneNumber = "",
+                inGameName = "Player",
+                freeFireUid = "",
+                dailyStreak = 0,
+                verificationLevel = 1,
+                isVerified = false
             )
         )
     }
@@ -210,7 +216,25 @@ fun MainAppOrchestrator(
 
     // Trigger on startup & on user change
     LaunchedEffect(currentUser.userId) {
-        refreshLiveData()
+        if (isLoggedIn) {
+            refreshLiveData()
+        }
+    }
+
+    // Full Fresh Startup / Unauthenticated Gate: Hero Onboarding & Auth Page
+    if (showHeroAuthScreen) {
+        HeroOnboardingScreen(
+            authApiService = authApiService,
+            onAuthSuccess = { auth ->
+                sessionManager?.saveTokens(auth.accessToken, auth.refreshToken)
+                sessionManager?.saveUserId(auth.user.userId)
+                currentUser = UserEntity.fromDto(auth.user)
+                isLoggedIn = true
+                showHeroAuthScreen = false
+                refreshLiveData()
+            }
+        )
+        return
     }
 
     // Sample Fallback Data if network is offline
@@ -266,9 +290,9 @@ fun MainAppOrchestrator(
     val displayTournaments = if (liveTournaments.isNotEmpty()) liveTournaments else sampleTournaments
     val displayTransactions = if (liveTransactions.isNotEmpty()) liveTransactions else emptyList()
 
-    // Installed UPI Apps
-    val mockUpiApps = remember {
-        listOf(
+    // Real Installed Device UPI Apps (Google Pay, PhonePe, Paytm, CRED)
+    val realUpiApps = remember {
+        upiIntentManager?.getInstalledUpiApps()?.ifEmpty { null } ?: listOf(
             UpiAppInfo("Google Pay", "com.google.android.apps.nbu.paisa.user", null, true),
             UpiAppInfo("PhonePe", "com.phonepe.app", null, true),
             UpiAppInfo("Paytm", "net.one97.paytm", null, true),
@@ -327,7 +351,7 @@ fun MainAppOrchestrator(
                             modifier = Modifier
                                 .clip(CutCornerShape(4.dp))
                                 .background(SlateElevated)
-                                .clickable { showAuthDialog = true }
+                                .clickable { showHeroAuthScreen = true }
                                 .padding(horizontal = 6.dp, vertical = 2.dp)
                         ) {
                             Text(
@@ -579,7 +603,7 @@ fun MainAppOrchestrator(
                             }
                         },
                         onSyncTelegramClick = {
-                            showAuthDialog = true
+                            showHeroAuthScreen = true
                         },
                         onBackClick = { currentTab = AppNavTab.TOURNAMENTS }
                     )
@@ -708,7 +732,7 @@ fun MainAppOrchestrator(
                     initialAmount = 500.0,
                     merchantVpa = "nextournament@icici",
                     merchantName = "NexTournament Esports",
-                    installedUpiApps = mockUpiApps,
+                    installedUpiApps = realUpiApps,
                     onSelectUpiApp = { app ->
                         Toast.makeText(context, "Opening ${app.appName}...", Toast.LENGTH_SHORT).show()
                     },
@@ -815,106 +839,6 @@ fun MainAppOrchestrator(
                         Toast.makeText(context, "Scorecard Submitted (Rank #$rank, $kills Kills). FairPlay audit underway!", Toast.LENGTH_LONG).show()
                     },
                     onDismiss = { showScorecardModal = false }
-                )
-            }
-
-            // SYSTEM AUTH: Real Authentication Gateway Dialog
-            if (showAuthDialog) {
-                AuthLoginDialog(
-                    onQuickLoginAdmin = {
-                        coroutineScope.launch {
-                            try {
-                                val res = authApiService?.quickLogin(QuickLoginRequest(5716978793L))
-                                if (res?.isSuccessful == true) {
-                                    res.body()?.let { auth ->
-                                        sessionManager?.saveTokens(auth.accessToken, auth.refreshToken)
-                                        sessionManager?.saveUserId(auth.user.userId)
-                                        currentUser = UserEntity.fromDto(auth.user)
-                                        showAuthDialog = false
-                                        Toast.makeText(context, "Welcome Owner Harsh (NexAdmin)!", Toast.LENGTH_SHORT).show()
-                                        refreshLiveData()
-                                    }
-                                } else {
-                                    Toast.makeText(context, "Login failed: ${res?.code()}", Toast.LENGTH_SHORT).show()
-                                }
-                            } catch (e: Exception) {
-                                Toast.makeText(context, "Network error: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    },
-                    onQuickLoginPlayer = {
-                        coroutineScope.launch {
-                            try {
-                                val res = authApiService?.quickLogin(QuickLoginRequest(1489381549L))
-                                if (res?.isSuccessful == true) {
-                                    res.body()?.let { auth ->
-                                        sessionManager?.saveTokens(auth.accessToken, auth.refreshToken)
-                                        sessionManager?.saveUserId(auth.user.userId)
-                                        currentUser = UserEntity.fromDto(auth.user)
-                                        showAuthDialog = false
-                                        Toast.makeText(context, "Logged in as ${auth.user.username}!", Toast.LENGTH_SHORT).show()
-                                        refreshLiveData()
-                                    }
-                                } else {
-                                    Toast.makeText(context, "Login failed: ${res?.code()}", Toast.LENGTH_SHORT).show()
-                                }
-                            } catch (e: Exception) {
-                                Toast.makeText(context, "Network error: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    },
-                    onTelegramSync = { code ->
-                        coroutineScope.launch {
-                            try {
-                                val res = authApiService?.syncWithTelegram(
-                                    TelegramSyncRequest(code, sessionManager?.getDeviceUuid() ?: "DEV-01")
-                                )
-                                if (res?.isSuccessful == true) {
-                                    res.body()?.let { auth ->
-                                        sessionManager?.saveTokens(auth.accessToken, auth.refreshToken)
-                                        sessionManager?.saveUserId(auth.user.userId)
-                                        currentUser = UserEntity.fromDto(auth.user)
-                                        showAuthDialog = false
-                                        Toast.makeText(context, "Telegram Synced: ${auth.user.username}!", Toast.LENGTH_SHORT).show()
-                                        refreshLiveData()
-                                    }
-                                } else {
-                                    Toast.makeText(context, "Sync failed: ${res?.code()}", Toast.LENGTH_SHORT).show()
-                                }
-                            } catch (e: Exception) {
-                                Toast.makeText(context, "Network error: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    },
-                    onPhoneVerify = { phone, otp ->
-                        coroutineScope.launch {
-                            try {
-                                val res = authApiService?.verifyOtp(
-                                    VerifyOtpRequest(
-                                        phoneNumber = phone,
-                                        otpCode = otp,
-                                        deviceId = sessionManager?.getDeviceUuid() ?: "DEV-01",
-                                        deviceModel = android.os.Build.MODEL
-                                    )
-                                )
-                                if (res?.isSuccessful == true) {
-                                    res.body()?.let { auth ->
-                                        sessionManager?.saveTokens(auth.accessToken, auth.refreshToken)
-                                        sessionManager?.saveUserId(auth.user.userId)
-                                        currentUser = UserEntity.fromDto(auth.user)
-                                        showAuthDialog = false
-                                        Toast.makeText(context, "Phone Verified!", Toast.LENGTH_SHORT).show()
-                                        refreshLiveData()
-                                    }
-                                } else {
-                                    Toast.makeText(context, "OTP Verification failed", Toast.LENGTH_SHORT).show()
-                                }
-                            } catch (e: Exception) {
-                                Toast.makeText(context, "Network error: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    },
-                    onDismiss = { showAuthDialog = false }
                 )
             }
 

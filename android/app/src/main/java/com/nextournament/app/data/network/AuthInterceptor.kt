@@ -1,5 +1,6 @@
 package com.nextournament.app.data.network
 
+import com.nextournament.app.data.security.AppSecurityGatekeeper
 import com.nextournament.app.data.security.SessionManager
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -13,15 +14,18 @@ class AuthInterceptor @Inject constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
-
-        // Skip auth header for open endpoints like login, OTP, version check
         val path = originalRequest.url.encodedPath
-        if (path.contains("/auth/phone/") || path.contains("/auth/refresh") || path.contains("/app/version-check")) {
-            return chain.proceed(originalRequest)
-        }
 
+        // Generate 3-Tier Security Tokens
+        val appKey = AppSecurityGatekeeper.getStaticAppKey()
+        val timeNonce = AppSecurityGatekeeper.generateReversedTimingNonce()
+        val signature = AppSecurityGatekeeper.computeHmacSignature(originalRequest.method, path, timeNonce)
         val token = sessionManager.getAccessToken()
+
         val requestBuilder = originalRequest.newBuilder()
+            .header("X-Nex-App-Key", appKey)
+            .header("X-Nex-Time-Nonce", timeNonce)
+            .header("X-Nex-Signature", signature)
             .header("X-Device-ID", sessionManager.getOrCreateDeviceId())
 
         if (!token.isNullOrBlank()) {

@@ -328,6 +328,75 @@ async def cmd_start(
             if delivered:
                 return
 
+        # Process in-app instant Telegram Handshake: /start sync_... or key_... or appsyn_...
+        # Format: sync_{key}_{user}_{time} or key_{user}_{time}
+        if args.startswith("sync_") or args.startswith("appsyn_") or args.startswith("key_"):
+            sync_token = args.strip()
+            parts = sync_token.split("_")
+
+            # Extract components: key, user/device tag, timestamp
+            provided_key = parts[1] if len(parts) > 1 else sync_token
+            provided_user_tag = parts[2] if len(parts) > 3 else "app_client"
+            provided_time: Optional[int] = None
+
+            if len(parts) >= 3 and parts[-1].isdigit():
+                try:
+                    provided_time = int(parts[-1])
+                except (ValueError, TypeError):
+                    pass
+
+            now_ts = int(datetime.now().timestamp())
+
+            # Validate timestamp freshness if provided (max 10-minute drift window)
+            if provided_time is not None and abs(now_ts - provided_time) > 600:
+                await message.answer(
+                    "⚠️ <b>Verification Key Expired</b>\n\n"
+                    "This in-build Telegram login key has expired (valid for 10 minutes).\n"
+                    "Please tap <b>Sync with Telegram</b> in the NexTournament App to generate a fresh link.",
+                    parse_mode="HTML"
+                )
+                return
+
+            if redis:
+                import json
+                sync_payload = {
+                    "telegram_id": db_user.telegram_id,
+                    "username": db_user.username or f"player_{db_user.telegram_id}",
+                    "first_name": db_user.first_name or "Player",
+                    "role": db_user.role.value if hasattr(db_user.role, 'value') else str(db_user.role),
+                    "verified": True,
+                    "key": provided_key,
+                    "user_tag": provided_user_tag,
+                    "timestamp": now_ts
+                }
+                # Store under both full token and key alias for instant resilient lookup
+                await redis.setex(f"app_sync:{sync_token}", 300, json.dumps(sync_payload))
+                if provided_key != sync_token:
+                    await redis.setex(f"app_sync:{provided_key}", 300, json.dumps(sync_payload))
+                logger.info(f"Handshake verified for sync token {sync_token} (key: {provided_key}) -> user {db_user.telegram_id}")
+
+            try:
+                await message.delete()
+            except Exception:
+                pass
+
+            hero_banner = get_random_hero_banner()
+            caption = (
+                f"⚡ <b>NEXTOURNAMENT MOBILE LINK VERIFIED!</b>\n\n"
+                f"👤 <b>Player:</b> {db_user.first_name} (@{db_user.username or 'N/A'})\n"
+                f"🆔 <b>Account ID:</b> <code>{db_user.telegram_id}</code>\n"
+                f"🔑 <b>Key Verified:</b> <code>{provided_key[:8]}...</code>\n"
+                f"💰 <b>Wallet Balance:</b> ₹{float(db_user.wallet_balance):.2f}\n\n"
+                f"✅ <b>Zero-Click Authentication Complete!</b>\n"
+                f"<i>Your Telegram account has been linked to your mobile app. Switch back to the NexTournament app to enter the arena!</i>"
+            )
+            await message.answer_photo(
+                photo=hero_banner,
+                caption=caption,
+                parse_mode="HTML"
+            )
+            return
+
     # Check terms acceptance state in Redis
     u_id = message.from_user.id
     already_confirmed = False

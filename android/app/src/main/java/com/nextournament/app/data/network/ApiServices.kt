@@ -5,11 +5,11 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface AuthApiService {
-    @POST("/api/v1/auth/phone/send-otp")
-    suspend fun sendOtp(@Body request: SendOtpRequest): Response<Map<String, String>>
+    @POST("/api/v1/auth/google")
+    suspend fun loginWithGoogle(@Body request: GoogleAuthRequest): Response<AuthResponse>
 
-    @POST("/api/v1/auth/phone/verify-otp")
-    suspend fun verifyOtp(@Body request: VerifyOtpRequest): Response<AuthResponse>
+    @GET("/api/v1/auth/telegram-sync-status")
+    suspend fun checkTelegramSyncStatus(@Query("token") token: String): Response<AuthResponse>
 
     @POST("/api/v1/auth/telegram-sync")
     suspend fun syncWithTelegram(@Body request: TelegramSyncRequest): Response<AuthResponse>
