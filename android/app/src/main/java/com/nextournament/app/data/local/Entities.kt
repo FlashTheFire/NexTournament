@@ -10,20 +10,28 @@ import com.nextournament.app.data.model.UserProfileDto
 data class TournamentEntity(
     @PrimaryKey val id: Long,
     val title: String,
-    val gameId: String,
-    val matchType: String,
-    val teamFormat: String,
-    val mapName: String,
-    val entryFee: Double,
-    val prizePool: Double,
-    val perKillBounty: Double,
-    val totalSlots: Int,
-    val filledSlots: Int,
-    val status: String,
-    val startTime: String,
-    val gunAttributes: Boolean,
-    val allowsEmulator: Boolean
+    val gameId: String = "Free Fire",
+    val matchType: String = "Battle Royale",
+    val teamFormat: String = "SQUAD",
+    val mapName: String = "Bermuda",
+    val entryFee: Double = 0.0,
+    val prizePool: Double = 0.0,
+    val perKillBounty: Double = 0.0,
+    val totalSlots: Int = 48,
+    val filledSlots: Int = 0,
+    val status: String = "OPEN",
+    val startTime: String = "",
+    val gunAttributes: Boolean = false,
+    val allowsEmulator: Boolean = false,
+    val roomId: String? = null,
+    val roomPassword: String? = null,
+    val startTimeEpoch: Long = 0L
 ) {
+    val game: String get() = gameId
+    val format: String get() = teamFormat
+    val map: String get() = mapName
+    val maxSlots: Int get() = totalSlots
+
     fun toDto(): TournamentDto = TournamentDto(
         id = id,
         title = title,
@@ -66,13 +74,25 @@ data class TournamentEntity(
 @Entity(tableName = "user_profile")
 data class UserEntity(
     @PrimaryKey val userId: Long,
-    val telegramId: Long?,
-    val username: String?,
-    val firstName: String,
-    val role: String,
-    val gameBalance: Double,
-    val winBalance: Double
+    val telegramId: Long? = null,
+    val username: String = "Gamer",
+    val firstName: String = "",
+    val role: String = "PLAYER",
+    val gameBalance: Double = 0.0,
+    val winBalance: Double = 0.0,
+    val bonusBalance: Double = 0.0,
+    val phoneNumber: String = "+91 98765 43210",
+    val inGameName: String? = null,
+    val freeFireUid: String? = null,
+    val bgmiId: String? = null,
+    val dailyStreak: Int = 1,
+    val verificationLevel: Int = 1,
+    val isVerified: Boolean = true
 ) {
+    val id: Long get() = userId
+    val walletBalance: Double get() = gameBalance + winBalance
+    val winningsBalance: Double get() = winBalance
+
     fun toDto(): UserProfileDto = UserProfileDto(
         userId = userId,
         telegramId = telegramId,
@@ -87,7 +107,7 @@ data class UserEntity(
         fun fromDto(dto: UserProfileDto): UserEntity = UserEntity(
             userId = dto.userId,
             telegramId = dto.telegramId,
-            username = dto.username,
+            username = dto.username ?: "Gamer",
             firstName = dto.firstName,
             role = dto.role,
             gameBalance = dto.gameBalance,
